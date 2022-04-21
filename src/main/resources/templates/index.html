@@ -37,9 +37,10 @@
 <br>
 
 <div class="container">
-    <h1>Registration and Login with Spring Boot, Spring Security,
-        Thymeleaf, Hibernate and MySQL</h1>
-    Welcome <span sec:authentication="principal.username"> User</span>
+    <ul th:each="Best : ${bestMovies}">
+        <li th:text="${Best.id + ': ' + Best.title}"></li>
+        <img th:href="@{https://image.tmdb.org/t/p/original/wigZBAmNrIhxp2FNGOROUAeHvdh.jpg}" style="width: 100px; height: 100px;">
+    </ul>
 </div>
 </body>
 </html>
