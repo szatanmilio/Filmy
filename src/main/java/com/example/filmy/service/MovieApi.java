@@ -1,9 +1,6 @@
 package com.example.filmy.service;
 
-import info.movito.themoviedbapi.TmdbApi;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.TmdbTV;
-import info.movito.themoviedbapi.TvResultsPage;
+import info.movito.themoviedbapi.*;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.tv.TvSeries;
@@ -11,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MovieApi {
+	TmdbSearch search = new TmdbSearch(new TmdbApi("095f50ca603d72b2dec062fd8e73567c"));
+//	MovieResultsPage testsearch = search.searchMovie("lord",null,"en",true,1);
 	private TmdbMovies movies = new TmdbApi("095f50ca603d72b2dec062fd8e73567c").getMovies();
 	private TmdbTV tvSeries = new TmdbApi("095f50ca603d72b2dec062fd8e73567c").getTvSeries();
 
@@ -44,5 +43,9 @@ public class MovieApi {
 
 	public TvResultsPage getPopularTvSeries(String lang, int page) {
 		return tvSeries.getPopular(lang, page);
+	}
+
+	public MovieResultsPage searchForProduction(String query, int year, String lang, boolean adult, int page){
+		return search.searchMovie("lord",null,"en",true,1);
 	}
 }

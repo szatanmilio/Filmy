@@ -18,64 +18,76 @@ public class ApiController {
 	@GetMapping("/movie")
 	@ResponseBody
 	public MovieDb getMovie(@RequestParam(name = "id", defaultValue = "123") int id,
-							@RequestParam(name = "lang", defaultValue = "en", required = false) String lang){
+							@RequestParam(name = "lang", defaultValue = "en", required = false) String lang) {
 		return api.getMovie(id, lang);
 	}
 
 	@GetMapping("/movieBest")
 	@ResponseBody
 	public MovieResultsPage getBestMovies(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-												@RequestParam(name = "page", defaultValue = "1") int page){
+										  @RequestParam(name = "page", defaultValue = "1") int page) {
 		return api.getBestMovies(lang, page);
 	}
 
 	@GetMapping("/moviePopular")
 	@ResponseBody
 	public MovieResultsPage getPopularMovies(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-										  @RequestParam(name = "page", defaultValue = "1") int page){
+											 @RequestParam(name = "page", defaultValue = "1") int page) {
 		return api.getPopularMovies(lang, page);
 	}
 
 	@GetMapping("/movieSimilar")
 	@ResponseBody
-	public MovieResultsPage getSimilarMovies( @RequestParam(name = "id", defaultValue = "123") int id,
-											  @RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-											 @RequestParam(name = "page", defaultValue = "1") int page){
+	public MovieResultsPage getSimilarMovies(@RequestParam(name = "id", defaultValue = "123") int id,
+											 @RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+											 @RequestParam(name = "page", defaultValue = "1") int page) {
 		return api.getSimilarMovies(id, lang, page);
 	}
 
 	@GetMapping("/movieRecomended")
 	@ResponseBody
-	public MovieResultsPage getRecomendedMovies( @RequestParam(name = "id", defaultValue = "123") int id,
-											  @RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-											  @RequestParam(name = "page", defaultValue = "1") int page){
+	public MovieResultsPage getRecomendedMovies(@RequestParam(name = "id", defaultValue = "123") int id,
+												@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+												@RequestParam(name = "page", defaultValue = "1") int page) {
 		return api.getRecomendedMovies(id, lang, page);
 	}
 
 	@GetMapping("/tvSeries")
 	@ResponseBody
 	public TvSeries getTvSeries(@RequestParam(name = "id", defaultValue = "123") int id,
-								@RequestParam(name = "lang", defaultValue = "en", required = false) String lang){
+								@RequestParam(name = "lang", defaultValue = "en", required = false) String lang) {
 		return api.getTvSeries(id, lang);
 	}
 
 	@GetMapping("/tvSeriesBest")
 	@ResponseBody
 	public TvResultsPage getBestTvSeries(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-										 @RequestParam(name = "page", defaultValue = "1") int page){
+										 @RequestParam(name = "page", defaultValue = "1") int page) {
 		return api.getBestTvSeries(lang, page);
 	}
 
 	@GetMapping("/tvSeriesPopular")
 	@ResponseBody
 	public TvResultsPage getPopularTvSeries(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-											 @RequestParam(name = "page", defaultValue = "1") int page){
+											@RequestParam(name = "page", defaultValue = "1") int page) {
 		return api.getPopularTvSeries(lang, page);
 	}
 
+	@GetMapping("/search")
+	@ResponseBody
+	public MovieResultsPage searchForProduction(@RequestParam(name = "query", defaultValue = "") String query,
+												@RequestParam(name = "year", defaultValue = "null", required = false) int year,
+												@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+												@RequestParam(name = "adult", defaultValue = "true", required = false) boolean adult,
+												@RequestParam(name = "page", defaultValue = "1") int page) {
+		return api.searchForProduction(query, year, lang, adult, page);
+	}
+
 	@GetMapping("/")
-	public String bestMovies(Model model){
+	public String bestMovies(Model model) {
 		MovieResultsPage res = getBestMovies("en", 1);
+		for(MovieDb movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
 		model.addAttribute("bestMovies", res);
 		return "index";
 	}
