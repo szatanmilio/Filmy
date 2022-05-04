@@ -17,19 +17,24 @@ public class ApiController {
 
 	@GetMapping("/movie")
 	public String getMovie(@RequestParam(name = "id", defaultValue = "120") int id,
-							@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-							Model model) {
+						   @RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+						   Model model) {
 		MovieDb movie = api.getMovie(id, lang);
-		movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
-		model.addAttribute("Movie",movie);
+		movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+		model.addAttribute("Movie", movie);
 		return "movie";
 	}
 
 	@GetMapping("/movieBest")
-	@ResponseBody
-	public MovieResultsPage getBestMovies(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-										  @RequestParam(name = "page", defaultValue = "1") int page) {
-		return api.getBestMovies(lang, page);
+	public String getBestMovies(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+								@RequestParam(name = "page", defaultValue = "1") int page,
+								Model model) {
+		MovieResultsPage res = api.getBestMovies("en", page);
+		for (MovieDb movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+		model.addAttribute("bestMovies", res);
+		model.addAttribute("page", page);
+		return "index";
 	}
 
 	@GetMapping("/moviePopular")
@@ -57,23 +62,23 @@ public class ApiController {
 
 	@GetMapping("/tvSeries")
 	public String getTvSeries(@RequestParam(name = "id", defaultValue = "123") int id,
-								@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+							  @RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
 							  Model model) {
 		TvSeries movie = api.getTvSeries(id, lang);
-		movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
-		model.addAttribute("tvSeries",movie);
+		movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+		model.addAttribute("tvSeries", movie);
 		return "tvSeries";
 	}
 
 	@GetMapping("/tvSeriesBest")
 //	@ResponseBody
 	public String getBestTvSeries(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-										 @RequestParam(name = "page", defaultValue = "1") int page,
-										 Model model) {
+								  @RequestParam(name = "page", defaultValue = "1") int page,
+								  Model model) {
 		TvResultsPage res = api.getBestTvSeries(lang, page);
-		for(TvSeries movie : res.getResults())
-			movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
-		model.addAttribute("bestTv",res);
+		for (TvSeries movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+		model.addAttribute("bestTv", res);
 		return "index";
 	}
 
@@ -96,11 +101,7 @@ public class ApiController {
 
 	@GetMapping("/")
 	public String bestMovies(Model model) {
-		MovieResultsPage res = getBestMovies("en", 1);
-		for(MovieDb movie : res.getResults())
-			movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
-		model.addAttribute("bestMovies", res);
-		return "index";
+		return getBestMovies("en", 1, model);
 	}
 
 }

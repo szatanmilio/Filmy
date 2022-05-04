@@ -134,18 +134,23 @@
         </div>
     </div>
     <div style="clear: both;"></div>
-<!--    <div class="pages">-->
-<!--        <form action="">-->
-<!--            <button type="Submit" name="page" value="' . $display . '">' . '<<' . '</button>-->
-<!--            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>-->
-<!--            <button type="Submit" name="page" value="' . $page . '">' . $page . '</button>-->
-<!--            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>-->
-<!--            <button type="Submit" name="page" value="' . $display . '">' . '>>'. '</button>-->
-<!--            <input type="hidden" name="search" value="' . $search . '">-->
-<!--            <input type="hidden" name="type" value="' . $type . '">-->
-<!--            <input type="hidden" name="sort" value="' . $sort . '">-->
-<!--        </form>-->
-<!--    </div>-->
+    <div class="pages">
+        <form action="">
+<!--            <a th:href="@{/movieBest/{lang}{page}(lang=${'en'}, page=${'2'})}"><button>&lt;&lt;</button></a>-->
+            <button type="Submit" th:name="page" th:value="1">&lt;&lt;</button>
+            <button type="Submit" th:name="page" th:value="${page <= 1} ? ${page} : ${page} - 1 ">&lt;&lt;</button>
+<!--            <span th:if="${page <= 1}">-->
+<!--                <button type="Submit" th:name="page" th:value="1">&lt;</button>-->
+<!--            </span>-->
+<!--            <span th:unless="${page <= 1}">-->
+<!--                <button type="Submit" th:name="page" th:value="${page-1}">&lt;</button>-->
+<!--            </span>-->
+
+            <button type="Submit" name="page" value="' . $page . '">' . $page . '</button>
+            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>
+            <button type="Submit" name="page" value="' . $display . '">' . '>>'. '</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
