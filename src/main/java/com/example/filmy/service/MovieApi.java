@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MovieApi {
-	TmdbSearch search = new TmdbSearch(new TmdbApi("095f50ca603d72b2dec062fd8e73567c"));
+	String apiKey = "095f50ca603d72b2dec062fd8e73567c";
+	TmdbSearch search = new TmdbSearch(new TmdbApi(apiKey));
 //	MovieResultsPage testsearch = search.searchMovie("lord",null,"en",true,1);
-	private TmdbMovies movies = new TmdbApi("095f50ca603d72b2dec062fd8e73567c").getMovies();
-	private TmdbTV tvSeries = new TmdbApi("095f50ca603d72b2dec062fd8e73567c").getTvSeries();
+	private TmdbMovies movies = new TmdbApi(apiKey).getMovies();
+	private TmdbTV tvSeries = new TmdbApi(apiKey).getTvSeries();
 
 	public MovieDb getMovie(int id, String lang) {
 		return movies.getMovie(id, lang);

@@ -16,10 +16,13 @@ public class ApiController {
 	private MovieApi api = new MovieApi();
 
 	@GetMapping("/movie")
-	@ResponseBody
-	public MovieDb getMovie(@RequestParam(name = "id", defaultValue = "123") int id,
-							@RequestParam(name = "lang", defaultValue = "en", required = false) String lang) {
-		return api.getMovie(id, lang);
+	public String getMovie(@RequestParam(name = "id", defaultValue = "120") int id,
+							@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+							Model model) {
+		MovieDb movie = api.getMovie(id, lang);
+		movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
+		model.addAttribute("Movie",movie);
+		return "movie";
 	}
 
 	@GetMapping("/movieBest")
@@ -53,17 +56,25 @@ public class ApiController {
 	}
 
 	@GetMapping("/tvSeries")
-	@ResponseBody
-	public TvSeries getTvSeries(@RequestParam(name = "id", defaultValue = "123") int id,
-								@RequestParam(name = "lang", defaultValue = "en", required = false) String lang) {
-		return api.getTvSeries(id, lang);
+	public String getTvSeries(@RequestParam(name = "id", defaultValue = "123") int id,
+								@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+							  Model model) {
+		TvSeries movie = api.getTvSeries(id, lang);
+		movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
+		model.addAttribute("tvSeries",movie);
+		return "tvSeries";
 	}
 
 	@GetMapping("/tvSeriesBest")
-	@ResponseBody
-	public TvResultsPage getBestTvSeries(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
-										 @RequestParam(name = "page", defaultValue = "1") int page) {
-		return api.getBestTvSeries(lang, page);
+//	@ResponseBody
+	public String getBestTvSeries(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+										 @RequestParam(name = "page", defaultValue = "1") int page,
+										 Model model) {
+		TvResultsPage res = api.getBestTvSeries(lang, page);
+		for(TvSeries movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original"+movie.getPosterPath());
+		model.addAttribute("bestTv",res);
+		return "index";
 	}
 
 	@GetMapping("/tvSeriesPopular")

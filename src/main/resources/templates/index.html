@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Movie Rating System</title>
@@ -13,10 +12,10 @@
 <body>
 <div id="container">
     <div class="left">
-        <div class="filtr">
-            <form class="filters" action="">
-                <input type="hidden" name="search" value="' . $search . '">
-                <button class="lista_buttons" type="submit" name="type" value="TV">Seriale</button>
+        <div class="filtr"  th:if="${bestMovies != null}">
+            <form class="filters" th:action="@{/tvSeriesBest}">
+<!--                <input type="hidden" name="search" value="' . $search . '">-->
+              <button class="lista_buttons" type="submit" name="type" value="TV">Seriale</button>
                 <button class="selected" type="submit" name="type" value="Movie">Filmy</button>
                 <!--                <button class="selected" type="submit" name="type" value="TV">Seriale</button>-->
                 <!--                <button class="lista_buttons" type="submit" name="type" value="Movie">Filmy</button>-->
@@ -44,18 +43,49 @@
                 <input type="hidden" name="type" value="' . $type . '">
             </form>
         </div>
+        <div class="filtr"  th:if="${bestTv != null}">
+            <form class="filters" th:action="@{/}">
+                <button class="lista_buttons" type="submit" name="type" value="TV">Seriale</button>
+                <button class="selected" type="submit" name="type" value="Movie">Filmy</button>
+            </form>
+            <form class="filters" action="">
+                <br>Sortowanie<br>
+                <select name="sort" class="sort">
+                    <option value="popularity.desc">Popularność malejąco</option>
+                    <option value="popularity.asc">Popularność rosnąco</option>
+                    <option value="release_date.asc">Najnowsze</option>
+                    <option value="release_date.desc">Najstarsze</option>
+                    <option value="original_title.asc">Orginalny tytuł: Od A do Z</option>
+                    <option value="original_title.desc">Orginalny tytuł: Od Z do A</option>
+                </select>
+                <button class="lista_buttons" type="submit">Sortuj</button>
+                <input type="hidden" name="type" value="' . $type . '">
+            </form>
+        </div>
     </div>
     <div class="center">
         <div class="filtr">
             <div class="movies_center">
 
-                <div class="movie" th:each="Best : ${bestMovies}">
+                <div class="movie" th:if="${bestMovies != null}" th:each="Best : ${bestMovies}">
 <!--                    <p th:utext="${Best.id + ': ' + Best.title}"></p>-->
 <!--                    <p th:utext="${Best.getOverview()}"></p>-->
-
+                    <div th:if="${Best.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
                     <a  th:href="@{/movie(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
+                    </div>
+                    <div th:if="${Best.posterPath == 'https://image.tmdb.org/t/p/originalnull'}">
+                        <a  th:href="@{/movie(id=${Best.id})}"><img th:src="@{img/nocover.jpg}"></a>
+                    </div>
 <!--                    <input type="hidden" name="id" th:value="${Best.id}">-->
 <!--                    <input type="hidden" name="type" th:value="${Best.title}">-->
+                </div>
+                <div class="movie" th:if="${bestTv != null}" th:each="Best : ${bestTv}">
+                    <!--                    <p th:utext="${Best.id + ': ' + Best.title}"></p>-->
+                    <!--                    <p th:utext="${Best.getOverview()}"></p>-->
+
+                    <a  th:href="@{/tvSeries(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
+                    <!--                    <input type="hidden" name="id" th:value="${Best.id}">-->
+                    <!--                    <input type="hidden" name="type" th:value="${Best.title}">-->
                 </div>
 
 
@@ -109,53 +139,18 @@
         </div>
     </div>
     <div style="clear: both;"></div>
-    <div class="pages">
-        <form action="">
-            <button type="Submit" name="page" value="' . $display . '">' . '<<' . '</button>
-            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>
-            <button type="Submit" name="page" value="' . $page . '">' . $page . '</button>
-            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>
-            <button type="Submit" name="page" value="' . $display . '">' . '>>'. '</button>
-            <input type="hidden" name="search" value="' . $search . '">
-            <input type="hidden" name="type" value="' . $type . '">
-            <input type="hidden" name="sort" value="' . $sort . '">
-        </form>
-    </div>
+<!--    <div class="pages">-->
+<!--        <form action="">-->
+<!--            <button type="Submit" name="page" value="' . $display . '">' . '<<' . '</button>-->
+<!--            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>-->
+<!--            <button type="Submit" name="page" value="' . $page . '">' . $page . '</button>-->
+<!--            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>-->
+<!--            <button type="Submit" name="page" value="' . $display . '">' . '>>'. '</button>-->
+<!--            <input type="hidden" name="search" value="' . $search . '">-->
+<!--            <input type="hidden" name="type" value="' . $type . '">-->
+<!--            <input type="hidden" name="sort" value="' . $sort . '">-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
 </body>
 </html>
-<!--<body>-->
-<!--&lt;!&ndash; create navigation bar ( header) &ndash;&gt;-->
-<!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
-<!--    <div class="container">-->
-<!--        <div class="navbar-header">-->
-<!--            <button type="button" class="navbar-toggle collapsed"-->
-<!--                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"-->
-<!--                    aria-controls="navbar">-->
-<!--                <span class="sr-only">Toggle navigation</span> <span-->
-<!--                    class="icon-bar"></span> <span class="icon-bar"></span> <span-->
-<!--                    class="icon-bar"></span>-->
-<!--            </button>-->
-<!--            <a class="navbar-brand" href="#" th:href="@{/}">Movie Rating System</a>-->
-<!--        </div>-->
-<!--        <div id="navbar" class="collapse navbar-collapse">-->
-<!--            <ul class="nav navbar-nav">-->
-<!--                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</nav>-->
-
-<!--<br>-->
-<!--<br>-->
-
-<!--<div class="container">-->
-<!--    <div th:each="Best : ${bestMovies}" style="width: 300px; height: 300px;">-->
-<!--        <p th:utext="${Best.id + ': ' + Best.title}"></p>-->
-<!--        <p th:utext="${Best.getOverview()}"></p>-->
-
-<!--        <img th:href="@{https://image.tmdb.org/t/p/original/( =${Best.posterPath})}" style="width: 100px; height: 100px;">-->
-<!--    </div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
