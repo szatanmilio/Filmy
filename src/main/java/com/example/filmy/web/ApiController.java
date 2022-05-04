@@ -34,6 +34,7 @@ public class ApiController {
 			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
 		model.addAttribute("bestMovies", res);
 		model.addAttribute("page", page);
+		model.addAttribute("totalPages", res.getTotalPages());
 		return "index";
 	}
 
@@ -71,7 +72,6 @@ public class ApiController {
 	}
 
 	@GetMapping("/tvSeriesBest")
-//	@ResponseBody
 	public String getBestTvSeries(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
 								  @RequestParam(name = "page", defaultValue = "1") int page,
 								  Model model) {
@@ -79,6 +79,8 @@ public class ApiController {
 		for (TvSeries movie : res.getResults())
 			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
 		model.addAttribute("bestTv", res);
+		model.addAttribute("page", page);
+		model.addAttribute("totalPages", res.getTotalPages());
 		return "index";
 	}
 
