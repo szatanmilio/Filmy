@@ -74,8 +74,6 @@
         </div>
     </div>
     <div class="center">
-        <div class="filtr">
-            <div class="movies_center">
                 <div class="movie" th:if="${bestMovies != null}" th:each="Best : ${bestMovies}">
                     <div th:if="${Best.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
                         <a th:href="@{/movie(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
@@ -87,8 +85,6 @@
                 <div class="movie" th:if="${bestTv != null}" th:each="Best : ${bestTv}">
                     <a th:href="@{/tvSeries(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
                 </div>
-            </div>
-        </div>
     </div>
     <div class="right">
         <div class="filtr">

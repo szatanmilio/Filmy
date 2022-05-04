@@ -1,4 +1,4 @@
 FROM openjdk:19-oraclelinux8
 ADD target/Filmy-0.0.1-SNAPSHOT.jar .
-EXPOSE 8000
+EXPOSE 8080
 CMD java -jar Filmy-0.0.1-SNAPSHOT.jar --envname=prod
