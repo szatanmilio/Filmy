@@ -45,8 +45,8 @@
         </div>
         <div class="filtr"  th:if="${bestTv != null}">
             <form class="filters" th:action="@{/}">
-                <button class="lista_buttons" type="submit" name="type" value="TV">Seriale</button>
-                <button class="selected" type="submit" name="type" value="Movie">Filmy</button>
+                <button class="selected" type="submit" name="type" value="TV">Seriale</button>
+                <button class="lista_buttons" type="submit" name="type" value="Movie">Filmy</button>
             </form>
             <form class="filters" action="">
                 <br>Sortowanie<br>
@@ -64,9 +64,6 @@
         </div>
     </div>
     <div class="center">
-        <div class="filtr">
-            <div class="movies_center">
-
                 <div class="movie" th:if="${bestMovies != null}" th:each="Best : ${bestMovies}">
 <!--                    <p th:utext="${Best.id + ': ' + Best.title}"></p>-->
 <!--                    <p th:utext="${Best.getOverview()}"></p>-->
@@ -121,8 +118,6 @@
                 <!--                               value="submit"/>-->
                 <!--                    </form>-->
                 <!--                </div>-->
-            </div>
-        </div>
     </div>
     <div class="right">
         <div class="filtr">
