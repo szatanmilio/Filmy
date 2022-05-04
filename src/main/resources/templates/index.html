@@ -11,16 +11,35 @@
 
 <body>
 <div id="container">
+    <div id="menu">
+        <a class="link" th:href="@{/movieBest(page='1')}">
+            <div class="menu-option">
+                <li class="text_menu">Lista filmów</li>
+            </div>
+        </a>
+        <a class="link" href="moja_lista.php">
+            <div class="menu-option">
+                <li class="text_menu">Moja lista</li>
+            </div>
+        </a>
+        <a class="link" href="ustawienia.php">
+            <div class="menu-option">
+                <li class="text_menu">Moje konto</li>
+            </div>
+        </a>
+        <a class="link" th:href="@{/logout}">
+            <div class="menu-option">
+                <li class="text_menu">Wyloguj się</li>
+            </div>
+        </a>
+        <div style="clear: both;"></div>
+    </div>
+
     <div class="left">
-        <div class="filtr"  th:if="${bestMovies != null}">
+        <div class="filtr" th:if="${bestMovies != null}">
             <form class="filters" th:action="@{/tvSeriesBest}">
-<!--                <input type="hidden" name="search" value="' . $search . '">-->
-              <button class="lista_buttons" type="submit" name="type" value="TV">Seriale</button>
-                <button class="selected" type="submit" name="type" value="Movie">Filmy</button>
-                <!--                <button class="selected" type="submit" name="type" value="TV">Seriale</button>-->
-                <!--                <button class="lista_buttons" type="submit" name="type" value="Movie">Filmy</button>-->
-                <!--                <button class="lista_buttons" type="submit" name="type" value="TV">Seriale</button>-->
-                <!--                <button class="lista_buttons" type="submit" name="type" value="Movie">Filmy</button>-->
+                <button class="lista_buttons" type="submit" th:name="page" th:value="${page}">Seriale</button>
+                <button class="selected" type="submit" th:name="page" th:value="${page}">Filmy</button>
             </form>
             <form class="filters" action="">
                 <br>Sortowanie<br>
@@ -33,20 +52,12 @@
                     <option value="original_title.desc">Orginalny tytuł: Od Z do A</option>
                 </select>
                 <button class="lista_buttons" type="submit">Sortuj</button>
-                <!--                <select name="sort" class="sort">';-->
-                <!--                    <option value="popularity.desc">Popularność malejąco</option>-->
-                <!--                    <option value="popularity.asc">Popularność rosnąco</option>-->
-                <!--                    <option value="first_air_date.asc">Najnowsze</option>-->
-                <!--                    <option value="first_air_date.desc">Najstarsze</option>-->
-                <!--                </select>-->
-                <!--                <button class="lista_buttons" type="submit">Sortuj</button>-->
-                <input type="hidden" name="type" value="' . $type . '">
             </form>
         </div>
-        <div class="filtr"  th:if="${bestTv != null}">
-            <form class="filters" th:action="@{/}">
-                <button class="selected" type="submit" name="type" value="TV">Seriale</button>
-                <button class="lista_buttons" type="submit" name="type" value="Movie">Filmy</button>
+        <div class="filtr" th:if="${bestTv != null}">
+            <form class="filters" th:action="@{/movieBest}">
+                <button class="selected" type="submit" th:name="page" th:value="${page}">Seriale</button>
+                <button class="lista_buttons" type="submit" th:name="page" th:value="${page}">Filmy</button>
             </form>
             <form class="filters" action="">
                 <br>Sortowanie<br>
@@ -59,65 +70,21 @@
                     <option value="original_title.desc">Orginalny tytuł: Od Z do A</option>
                 </select>
                 <button class="lista_buttons" type="submit">Sortuj</button>
-                <input type="hidden" name="type" value="' . $type . '">
             </form>
         </div>
     </div>
     <div class="center">
                 <div class="movie" th:if="${bestMovies != null}" th:each="Best : ${bestMovies}">
-<!--                    <p th:utext="${Best.id + ': ' + Best.title}"></p>-->
-<!--                    <p th:utext="${Best.getOverview()}"></p>-->
                     <div th:if="${Best.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
-                    <a  th:href="@{/movie(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
+                        <a th:href="@{/movie(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
                     </div>
                     <div th:if="${Best.posterPath == 'https://image.tmdb.org/t/p/originalnull'}">
-                        <a  th:href="@{/movie(id=${Best.id})}"><img th:src="@{img/nocover.jpg}"></a>
+                        <a th:href="@{/movie(id=${Best.id})}"><img th:src="@{img/nocover.jpg}"></a>
                     </div>
-<!--                    <input type="hidden" name="id" th:value="${Best.id}">-->
-<!--                    <input type="hidden" name="type" th:value="${Best.title}">-->
                 </div>
                 <div class="movie" th:if="${bestTv != null}" th:each="Best : ${bestTv}">
-                    <!--                    <p th:utext="${Best.id + ': ' + Best.title}"></p>-->
-                    <!--                    <p th:utext="${Best.getOverview()}"></p>-->
-
-                    <a  th:href="@{/tvSeries(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
-                    <!--                    <input type="hidden" name="id" th:value="${Best.id}">-->
-                    <!--                    <input type="hidden" name="type" th:value="${Best.title}">-->
+                    <a th:href="@{/tvSeries(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
                 </div>
-
-
-                <!--                <div class="movie">-->
-                <!--                    <form action="">-->
-                <!--                        <input type="hidden" name="id" value="">-->
-                <!--                        <input type="hidden" name="type" value="Movie">-->
-                <!--                        <input type="image" src="' . $poster . '" alt=""-->
-                <!--                               value="submit"/>-->
-                <!--                    </form>-->
-                <!--                </div>-->
-                <!--                <div class="movie">-->
-                <!--                    <h1>Nic nie znaleziono,<br> spróbuj wyszukać coś innego</h1>-->
-                <!--                </div>-->
-                <!--                <div class="movie">-->
-                <!--                    <form action="">-->
-                <!--                        <input type="hidden" name="id" value="">-->
-                <!--                        <input type="hidden" name="type" value="TV">-->
-                <!--                        <input type="image" src="' . $poster . '" alt=""-->
-                <!--                               value="submit"/>-->
-                <!--                    </form>-->
-                <!--                </div>-->
-                <!--                <div class="movie">-->
-                <!--                </div>-->
-                <!--                <div class="movie">-->
-                <!--                    <h1>Nic nie znaleziono,<br> spróbuj wyszukać coś innego</h1>-->
-                <!--                </div>-->
-                <!--                <div class="movie">-->
-                <!--                    <form action="">-->
-                <!--                        <input type="hidden" name="id" value="">-->
-                <!--                        <input type="hidden" name="type" value="Movie">-->
-                <!--                        <input type="image" src="' . $poster . '" alt=""-->
-                <!--                               value="submit"/>-->
-                <!--                    </form>-->
-                <!--                </div>-->
     </div>
     <div class="right">
         <div class="filtr">
@@ -134,21 +101,24 @@
         </div>
     </div>
     <div style="clear: both;"></div>
-    <div class="pages">
-        <form action="">
-<!--            <a th:href="@{/movieBest/{lang}{page}(lang=${'en'}, page=${'2'})}"><button>&lt;&lt;</button></a>-->
+    <div class="pages" th:if="${bestMovies != null}">
+        <form th:action="@{/movieBest}">
             <button type="Submit" th:name="page" th:value="1">&lt;&lt;</button>
-            <button type="Submit" th:name="page" th:value="${page <= 1} ? ${page} : ${page} - 1 ">&lt;&lt;</button>
-<!--            <span th:if="${page <= 1}">-->
-<!--                <button type="Submit" th:name="page" th:value="1">&lt;</button>-->
-<!--            </span>-->
-<!--            <span th:unless="${page <= 1}">-->
-<!--                <button type="Submit" th:name="page" th:value="${page-1}">&lt;</button>-->
-<!--            </span>-->
-
-            <button type="Submit" name="page" value="' . $page . '">' . $page . '</button>
-            <button type="Submit" name="page" value="' . $display . '">' . $display . '</button>
-            <button type="Submit" name="page" value="' . $display . '">' . '>>'. '</button>
+            <button type="Submit" th:name="page" th:value="${page <= 1} ? ${page} : ${page} - 1 ">&lt;</button>
+            <button type="Submit" th:name="page" th:value="${page}" th:text="${page}"></button>
+            <button type="Submit" th:name="page" th:value="${page >= totalPages} ? ${totalPages} : ${page} + 1 ">&gt;
+            </button>
+            <button type="Submit" th:name="page" th:value="${totalPages}">&gt;&gt;</button>
+        </form>
+    </div>
+    <div class="pages" th:if="${bestTv != null}">
+        <form th:action="@{/tvSeriesBest}">
+            <button type="Submit" th:name="page" th:value="1">&lt;&lt;</button>
+            <button type="Submit" th:name="page" th:value="${page <= 1} ? ${page} : ${page} - 1 ">&lt;</button>
+            <button type="Submit" th:name="page" th:value="${page}" th:text="${page}"></button>
+            <button type="Submit" th:name="page" th:value="${page >= totalPages} ? ${totalPages} : ${page} + 1 ">&gt;
+            </button>
+            <button type="Submit" th:name="page" th:value="${totalPages}">&gt;&gt;</button>
         </form>
     </div>
 </div>
