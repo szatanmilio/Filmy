@@ -2,6 +2,7 @@ package com.example.filmy.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "lists")
@@ -9,25 +10,58 @@ public class Lists {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "Rating")
-    private Integer Rating;
-
-    private enum status {
-        OBEJRZANY, OGLADAM, PLANUJE;
-    }
+    private Long idList;
 
     private String listName;
 
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "users_roles",
-//            joinColumns = @JoinColumn(
-//                    name = "user_id", referencedColumnName = "idUser"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "role_id", referencedColumnName = "idRole"))
-//
-//    private Collection<User> users;
+    @OneToMany
+    private Set<Movie> movies;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="idUser", nullable=false)
+    private User user;
+
+    public Long getIdList() {
+        return idList;
+    }
+
+    public void setIdList(Long idList) {
+        this.idList = idList;
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Lists() {
+
+    }
+
+    public Lists(Long idList, String listName, Set<Movie> movies) {
+        this.idList = idList;
+        this.listName = listName;
+        this.movies = movies;
+    }
+
 }

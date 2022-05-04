@@ -2,22 +2,13 @@ package com.example.filmy.model;
 
 
 import java.util.Collection;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 @Entity
-@Table(name =  "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name =  "user", uniqueConstraints = {@UniqueConstraint(columnNames = "email"),
+                                            @UniqueConstraint(columnNames = "username")} )
 public class User {
 
     @Id
@@ -38,8 +29,10 @@ public class User {
                     name = "user_id", referencedColumnName = "idUser"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "idRole"))
-
     private Collection<Role> roles;
+
+    @OneToMany
+    private Set<Lists> Lists;
 
     public User() {
 
@@ -83,4 +76,11 @@ public class User {
         this.roles = roles;
     }
 
+    public Set<Lists> getLists() {
+        return Lists;
+    }
+
+    public void setLists(Set<Lists> lists) {
+        Lists = lists;
+    }
 }

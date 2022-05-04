@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" th:href="@{css/movie.css}">
+  <link rel="stylesheet" th:href="@{css/main.css}">
+  <title th:text="${Movie.title}"></title>
+</head>
+<body>
+<div id="container">
+  <div class="temp">
+
+
+
+<!--    <h1 style="color:#F0F8FF; text-align:center;">Coś poszło nie tak, spróbuj ponownie.</h1>-->
+
+<!--    <span style="color:red">Błąd serwera! Przepraszamy za niedogodnosci i prosimy spróbować ponownie później.</span>-->
+<!--    <br />Informacja deweloperska: '.$e;-->
+
+    <div class="miniature">
+
+
+        <img th:src="${Movie.posterPath}" alt="/img/movie.css">
+   </div>
+
+
+    <div class="clearfix"></div>
+
+
+    <div class="menu-list">
+    <form action="" method="POST">
+    <button class="add_to_list" name="obejrzane">Obejrzane</button>
+     <button class="add_to_list" name="ogladam">Oglądam</button>
+      <button class="add_to_list" name="plany">W planach</button>
+
+<!--   <button class="on_list" name="obejrzane">Obejrzane</button>-->
+<!-- <button class="add_to_list" name="obejrzane">Obejrzane</button>-->
+<!-- <button class="on_list" name="ogladam">Oglądam</button>-->
+<!--    <button class="add_to_list" name="ogladam">Oglądam</button>-->
+
+<!--    <button class="on_list" name="plany">W planach</button>-->
+<!--    <button class="add_to_list" name="plany">W planach</button>-->
+
+   </form>
+   <br><br>
+
+<!--    <div class="tag" th:each="tag : ${Movie.getGenres()}">-->
+    <button class="tag"  th:each="tag : ${Movie.getGenres()} " th:text="${tag.getName()}"></button>
+<!--    </div>-->
+    </div>
+
+
+    <div class="desc">
+
+    <h1 th:text="${Movie.title}"></h1>
+
+    <h3 th:text="${Movie.overview.isBlank()} ? 'BRAK OPISU' : ${Movie.overview}"></h3>
+
+<!--    <h3>BRAK OPISU</h3>-->
+
+    </div>
+
+<!--    <div class="clearfix"></div>-->
+
+
+
+    <div class="rating">
+<!--      <script src="gwiazdki.js"></script>-->
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
