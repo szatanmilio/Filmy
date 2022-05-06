@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{css/movie.css}">
+    <link rel="stylesheet" th:href="@{css/main.css}">
+    <title th:if="${Movie != null}" th:text="${Movie.title}"></title>
+    <title th:if="${tvSeries != null}" th:text="${tvSeries.name}"></title>
+</head>
+<body>
+<div id="container" th:if="${Movie != null}">
+    <div id="menu">
+        <a class="link" th:href="@{/movieBest(page='1')}">
+            <div class="menu-option">
+                <li class="text_menu">Lista filmów</li>
+            </div>
+        </a>
+        <a class="link" href="moja_lista.php">
+            <div class="menu-option">
+                <li class="text_menu">Moja lista</li>
+            </div>
+        </a>
+        <a class="link" href="ustawienia.php">
+            <div class="menu-option">
+                <li class="text_menu">Moje konto</li>
+            </div>
+        </a>
+        <a class="link" th:href="@{/logout}">
+            <div class="menu-option">
+                <li class="text_menu">Wyloguj się</li>
+            </div>
+        </a>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="temp">
+        <div class="miniature">
+            <img th:src="${Movie.posterPath}" alt="/img/movie.css">
+        </div>
+        <div class="clearfix"></div>
+        <div class="menu-list">
+            <form th:action="@{/production}" method="post" th:object="${Movie}">
+                <button class="add_to_list" name="obejrzane" th:value="*{status}">Obejrzane</button>
+                <button class="add_to_list" name="ogladam" th:field="*{status}">Oglądam</button>
+                <button class="add_to_list" name="plany" th:field="*{status}">W planach</button>
+            </form>
+            <br><br>
+            <button class="tag" th:each="tag : ${Movie.getGenres()} " th:text="${tag.getName()}"></button>
+        </div>
+
+
+        <div class="desc">
+
+            <h1 th:text="${Movie.title}"></h1>
+
+            <h3 th:text="${Movie.overview.isBlank()} ? 'BRAK OPISU' : ${Movie.overview}"></h3>
+
+        </div>
+
+        <!--    <div class="clearfix"></div>-->
+
+        <!--        <div class="rating">-->
+        <!--                  <script src="gwiazdki.js"></script>-->
+        <!--        </div>-->
+    </div>
+</div>
+<div id="container" th:if="${tvSeries != null}">
+    <div id="menu">
+        <a class="link" th:href="@{/tvSeriesBest(page='1')}">
+            <div class="menu-option">
+                <li class="text_menu">Lista Seriali</li>
+            </div>
+        </a>
+        <a class="link" href="moja_lista.php">
+            <div class="menu-option">
+                <li class="text_menu">Moja lista</li>
+            </div>
+        </a>
+        <a class="link" href="ustawienia.php">
+            <div class="menu-option">
+                <li class="text_menu">Moje konto</li>
+            </div>
+        </a>
+        <a class="link" th:href="@{/logout}">
+            <div class="menu-option">
+                <li class="text_menu">Wyloguj się</li>
+            </div>
+        </a>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="temp">
+        <div class="miniature">
+            <img th:src="${tvSeries.posterPath}" alt="/img/movie.css">
+        </div>
+        <div class="clearfix"></div>
+        <div class="menu-list">
+            <form action="" method="POST">
+                <button class="add_to_list" name="obejrzane">Obejrzane</button>
+                <button class="add_to_list" name="ogladam">Oglądam</button>
+                <button class="add_to_list" name="plany">W planach</button>
+            </form>
+            <br><br>
+            <button class="tag" th:each="tag : ${tvSeries.getGenres()} " th:text="${tag.getName()}"></button>
+        </div>
+
+
+        <div class="desc">
+
+            <h1 th:text="${tvSeries.name}"></h1>
+
+            <h3 th:text="${tvSeries.overview.isBlank()} ? 'BRAK OPISU' : ${tvSeries.overview}"></h3>
+
+        </div>
+
+        <!--    <div class="clearfix"></div>-->
+
+        <!--        <div class="rating">-->
+        <!--                  <script src="gwiazdki.js"></script>-->
+        <!--        </div>-->
+    </div>
+</div>
+</body>
+</html>

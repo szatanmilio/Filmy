@@ -22,7 +22,7 @@ public class ApiController {
 		MovieDb movie = api.getMovie(id, lang);
 		movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
 		model.addAttribute("Movie", movie);
-		return "movie";
+		return "production";
 	}
 
 	@GetMapping("/movieBest")
@@ -68,7 +68,7 @@ public class ApiController {
 		TvSeries movie = api.getTvSeries(id, lang);
 		movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
 		model.addAttribute("tvSeries", movie);
-		return "tvSeries";
+		return "production";
 	}
 
 	@GetMapping("/tvSeriesBest")
