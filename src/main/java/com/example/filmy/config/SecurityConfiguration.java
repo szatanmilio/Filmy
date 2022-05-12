@@ -1,7 +1,7 @@
 package com.example.filmy.config;
 
 
-import com.example.filmy.service.MovieService;
+//import com.example.filmy.service.MovieService;
 import com.example.filmy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +21,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MovieService movieService;
+//    @Autowired
+//    private MovieService movieService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

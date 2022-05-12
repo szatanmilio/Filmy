@@ -3,7 +3,7 @@ package com.example.filmy.model;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
-
+@Deprecated
 @Entity
 @Table(name = "lists")
 public class Lists {
