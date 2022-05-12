@@ -2,7 +2,7 @@ package com.example.filmy.model;
 
 import javax.persistence.*;
 
-
+@Deprecated
 @Entity
 @Table(name = "movie")
 public class Movie {

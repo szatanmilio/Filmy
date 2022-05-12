@@ -32,7 +32,8 @@ public class User {
     private Collection<Role> roles;
 
     @OneToMany
-    private Set<Lists> Lists;
+    @JoinColumn(name = "id_user")
+    private Set<Production> productionsList;
 
     public User() {
 
@@ -76,11 +77,11 @@ public class User {
         this.roles = roles;
     }
 
-    public Set<Lists> getLists() {
-        return Lists;
+    public Set<Production> getLists() {
+        return productionsList;
     }
 
-    public void setLists(Set<Lists> lists) {
-        Lists = lists;
+    public void setLists(Set<Production> lists) {
+        productionsList = lists;
     }
 }
