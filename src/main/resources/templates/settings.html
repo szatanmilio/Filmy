@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{css/main.css}"
+          crossorigin="anonymous">
+	<title>Ustawienia</title>
+</head>
+<body>
+    <div id="container">
+        <div id="menu">
+            <a class="link" th:href="@{/movieBest(page='1')}">
+                <div class="menu-option">
+                    <li class="text_menu">Lista filmów</li>
+                </div>
+            </a>
+            <a class="link"  th:href="@{/myList}">
+                <div class="menu-option">
+                    <li class="text_menu">Moja lista</li>
+                </div>
+            </a>
+            <a class="link" th:href="@{/settings}">
+                <div class="menu-option">
+                    <li class="text_menu">Moje konto</li>
+                </div>
+            </a>
+            <a class="link" th:href="@{/logout}">
+                <div class="menu-option">
+                    <li class="text_menu">Wyloguj się</li>
+                </div>
+            </a>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="mid">
+            <div id="password">
+                <form method="POST" action='zmien_haslo.php'>
+                    <label class="title">Zmiana hasła</label> <br>
+                    <label class="text">Nowe hasło: </label> <br>
+                    <input type="password" name="password" onfocus="this.placeholder=''" placeholder="Wprowadź nowe hasło" onblur="this.placeholder='Wprowadź nowe hasło'">
+                    <br>
+                    <label class="text">Stare hasło: </label> <br>
+                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'">
+                    <br>
+                    <input type="submit" value="Zmień hasło">
+                </form>
+            </div>
+
+            <div id="email">
+                <form method="POST" action='zmien_email.php'>
+                    <label class="title">Zmiana email</label><br>
+                    <label class="text">Podaj nowy adres email: </label><br>
+                    <input type="email" name="email" onfocus="this.placeholder=''" placeholder="Wprowadź nowy adres e-mail" onblur="this.placeholder='Wprowadź nowy adres e-mail'">
+                    <div class="error"></div>
+                    <br>
+                    <label class="text">Podaj hasło: </label><br>
+                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'">
+                    <div class="error"></div><br>
+                    <input type="submit" value="Zmień email">
+                </form>
+            </div>
+
+            <div id="account">
+                <form method="POST" action=''>
+                    <label class="title">Usuwanie konta</label><br>
+                    <label class="text">W celu autoryzacji podaj swoje hasło: </label><br>
+                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'">
+                    <div class="error"></div>
+                    <br>
+                    <input type="submit" value="Usuń konto">
+                </form>
+            </div>
+        </div>
+
+        <div style="clear: both;"></div>
+
+    </div>
+</body>

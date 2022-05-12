@@ -11,6 +11,16 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/settings")
+    public String settings(){
+        return "settings";
+    }
+
+    @GetMapping("/myList")
+    public String myList(){
+        return "myList";
+    }
+
 //    @GetMapping("/")
 //    public String home() {
 //        return "index";
