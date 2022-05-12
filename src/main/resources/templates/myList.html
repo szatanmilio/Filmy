@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{css/main.css}"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="film.css">
+	<title>Moja Lista</title>
+</head>
+<body style="color:white">
+    <div id="container">
+        <div id="menu">
+            <a class="link" th:href="@{/movieBest(page='1')}">
+                <div class="menu-option">
+                    <li class="text_menu">Lista filmów</li>
+                </div>
+            </a>
+            <a class="link"  th:href="@{/myList}">
+                <div class="menu-option">
+                    <li class="text_menu">Moja lista</li>
+                </div>
+            </a>
+            <a class="link" th:href="@{/settings}">
+                <div class="menu-option">
+                    <li class="text_menu">Moje konto</li>
+                </div>
+            </a>
+            <a class="link" th:href="@{/logout}">
+                <div class="menu-option">
+                    <li class="text_menu">Wyloguj się</li>
+                </div>
+            </a>
+            <div style="clear: both;"></div>
+        </div>
+	  <div id="stats">
+	  <form action="">
+          <input style="width: 100%" class="for_stats" type="submit" name="type" value="TV">
+          <input style="width: 100%" class="for_stats" type="submit" name="type" value="Movie">
+      </form>
+	  <p>Filmy</p>
+	  <p>Pozycji na liście: <?php echo $filmy_ogolnie[0]?></p>
+	  <p>Obejrzane: <?php echo $filmy_obejrzane[0]?></p>
+	  <p>Obecnie oglądane: <?php echo $filmy_ogladane[0]?></p>
+	  <p>W planach: <?php echo $filmy_wplanach[0]?></p>
+	  <p>Seriale</p>
+	  <p>Pozycji na liście: <?php echo $seriale_ogolnie[0]?></p>
+	  <p>Obejrzane: <?php echo $seriale_obejrzane[0]?></p>
+	  <p>Obecnie oglądane: <?php echo $seriale_ogladane[0]?></p>
+	  <p>W planach: <?php echo $seriale_wplanach[0]?></p>
+	  <p>Razem</p>
+	  <p>Pozycji na liście: <?php echo $razem_ogolnie[0]?></p>
+	  <p>Obejrzane: <?php echo $razem_obejrzane[0]?></p>
+	  <p>Obecnie oglądane: <?php echo $razem_ogladane[0]?></p>
+	  <p>W planach: <?php echo $razem_wplanach[0]?></p>
+	  <p>Filtry: </p>
+	  <form action="">
+          <input style="width: 90%" class="for_stats" type="submit" name="type2" value="Obejrzane">
+          <input style="width: 90%" class="for_stats" type="submit" name="type2" value="Ogladane">
+		  <input style="width: 90%" class="for_stats" type="submit" name="type2" value="W planach">
+		  <input style="width: 90%" class="for_stats" type="submit" name="type2" value="Wszystko">
+      </form>
+	  </div>
+	  <div id ="user_list">
+          <div class = "bakamovie">
+              <div class = "movie">
+                  <form action="">
+                      <input type="hidden" name="id" value="' .  $result->id . '">
+                      <input type="hidden" name="type" value="Movie">
+                      <input type="image" class="image" src="' . $poster . '" alt="' . $result->title . '" value="submit" />
+                  </form>
+                  <form action="zmien_status.php?id='.$id_filmu.'&type='.$type.'" method="POST">
+                      <button class="on_list" name="obejrzane">Obejrzane</button><br />
+                      <button class="add_to_list" name="obejrzane">Obejrzane</button><br />
+                      <button class="on_list" name="ogladam">Oglądam</button><br />
+                      <button class="add_to_list" name="ogladam">Oglądam</button><br />
+                      <button class="on_list" name="plany">W planach</button><br />
+                      <button class="add_to_list" name="plany">W planach</button><br />
+                  </form>
+                  <br><br>
+                  <form action="usun_z_listy.php" method="POST">
+                      <input type="hidden" name="id_filmu" value="$id_filmu">
+                      <input type="submit" value="usuń z listy">
+                  </form>
+                  <div class="rating">
+                      <script src="script.js"></script>
+                  </div>
+
+              </div>
+          </div>
+          <form action="">
+              <input type="hidden" name="id" value="' .  $result->id . '">
+              <input type="hidden" name="type" value="TV">
+              <input type="image" class="image" src="' . $poster . '" alt="' . $result->name . '" value="submit" />
+          </form>
+          <form action="" method="POST">
+              <button class="on_list" name="obejrzane">Obejrzane</button><br />
+              <button class="add_to_list" name="obejrzane">Obejrzane</button><br />
+              <button class="on_list" name="ogladam">Oglądam</button><br />
+              <button class="add_to_list" name="ogladam">Oglądam</button><br />
+              <button class="on_list" name="plany">W planach</button><br />
+              <button class="add_to_list" name="plany">W planach</button><br />
+          </form>
+          <br><br>
+          <form action="" method="POST">
+            <input type="hidden" name="id_filmu" value="$id_filmu">
+            <input type="submit" value="usuń z listy">
+          </form>
+          <div class="rating">
+              <script src="script.js"></script>
+          </div>
+
+      </div>
+    </div>
+</body>
+</html>
