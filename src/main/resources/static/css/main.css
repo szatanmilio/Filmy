@@ -7,9 +7,42 @@ body {
 
 img {
     width: 18%;
+    height: 120px;
     display: inline-block;
     float: left;
     margin: 1%;
+}
+
+@media only screen and (min-width: 600px) {
+    img {height: 165px;}
+}
+
+@media only screen and (min-width: 1100px) {
+    img {height: 215px;}
+}
+
+@media only screen and (min-width: 1550px) {
+    img {height: 255px;}
+}
+
+@media only screen and (min-width: 1800px) {
+    img {height: 310px }
+}
+
+@media only screen and (min-width: 2400px) {
+    img {height: 400px }
+}
+
+@media only screen and (min-width: 3000px) {
+    img {height: 480px }
+}
+
+@media only screen and (min-width: 3500px) {
+    img {height: 550px }
+}
+
+@media only screen and (min-width: 4500px) {
+    img {height: 800px }
 }
 
 h3 {
