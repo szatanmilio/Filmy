@@ -33,27 +33,27 @@
         </div>
         <div class="mid">
             <div id="password">
-                <form method="POST" action='zmien_haslo.php'>
+                <form method="POST" th:action="@{/changeUserPassword}" th:object="${UserDto}" >
                     <label class="title">Zmiana hasła</label> <br>
                     <label class="text">Nowe hasło: </label> <br>
-                    <input type="password" name="password" onfocus="this.placeholder=''" placeholder="Wprowadź nowe hasło" onblur="this.placeholder='Wprowadź nowe hasło'">
+                    <input type="password" name="password" onfocus="this.placeholder=''" placeholder="Wprowadź nowe hasło" onblur="this.placeholder='Wprowadź nowe hasło'" th:field="*{password}">
                     <br>
                     <label class="text">Stare hasło: </label> <br>
-                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'">
+                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'" th:field="*{aPassword}">
                     <br>
                     <input type="submit" value="Zmień hasło">
                 </form>
             </div>
 
             <div id="email">
-                <form method="POST" action='zmien_email.php'>
+                <form method="POST" th:action="@{/changeUserEmail}" th:object="${UserDto}" >
                     <label class="title">Zmiana email</label><br>
                     <label class="text">Podaj nowy adres email: </label><br>
-                    <input type="email" name="email" onfocus="this.placeholder=''" placeholder="Wprowadź nowy adres e-mail" onblur="this.placeholder='Wprowadź nowy adres e-mail'">
+                    <input type="email" name="email" onfocus="this.placeholder=''" placeholder="Wprowadź nowy adres e-mail" onblur="this.placeholder='Wprowadź nowy adres e-mail'" th:field="*{email}">
                     <div class="error"></div>
                     <br>
                     <label class="text">Podaj hasło: </label><br>
-                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'">
+                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'" th:field="*{aPassword}">
                     <div class="error"></div><br>
                     <input type="submit" value="Zmień email">
                 </form>
