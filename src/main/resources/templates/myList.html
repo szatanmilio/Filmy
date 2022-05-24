@@ -30,28 +30,28 @@
                     <li class="text_menu">Wyloguj się</li>
                 </div>
             </a>
-            <div style="clear: both;"></div>
         </div>
+        <div style="clear: both;"></div>
 	  <div id="stats">
 	  <form action="">
           <input style="width: 100%" class="for_stats" type="submit" name="type" value="TV">
           <input style="width: 100%" class="for_stats" type="submit" name="type" value="Movie">
       </form>
 	  <p>Filmy</p>
-	  <p>Pozycji na liście: <?php echo $filmy_ogolnie[0]?></p>
-	  <p>Obejrzane: <?php echo $filmy_obejrzane[0]?></p>
-	  <p>Obecnie oglądane: <?php echo $filmy_ogladane[0]?></p>
-	  <p>W planach: <?php echo $filmy_wplanach[0]?></p>
+	  <p>Pozycji na liście: <b th:text="${data.getMovieAll()}"></b></p>
+	  <p>Obejrzane: <b th:text="${data.getMovieWatched()}"></b></p>
+	  <p>Obecnie oglądane: <b th:text="${data.getMovieWatching()}"></b></p>
+	  <p>W planach: <b th:text="${data.getMovieFuture()}"></b></p>
 	  <p>Seriale</p>
-	  <p>Pozycji na liście: <?php echo $seriale_ogolnie[0]?></p>
-	  <p>Obejrzane: <?php echo $seriale_obejrzane[0]?></p>
-	  <p>Obecnie oglądane: <?php echo $seriale_ogladane[0]?></p>
-	  <p>W planach: <?php echo $seriale_wplanach[0]?></p>
+	  <p>Pozycji na liście: <b th:text="${data.getTvAll()}"></b></p>
+	  <p>Obejrzane: <b th:text="${data.getTvWatched()}"></b></p>
+	  <p>Obecnie oglądane: <b th:text="${data.getTvWatching()}"></b></p>
+	  <p>W planach: <b th:text="${data.getTvFuture()}"></b></p>
 	  <p>Razem</p>
-	  <p>Pozycji na liście: <?php echo $razem_ogolnie[0]?></p>
-	  <p>Obejrzane: <?php echo $razem_obejrzane[0]?></p>
-	  <p>Obecnie oglądane: <?php echo $razem_ogladane[0]?></p>
-	  <p>W planach: <?php echo $razem_wplanach[0]?></p>
+	  <p>Pozycji na liście: <b th:text="${data.getAll()}"></b></p>
+	  <p>Obejrzane: <b th:text="${data.getAllWatched()}"></b></p>
+	  <p>Obecnie oglądane: <b th:text="${data.getAllWatching()}"></b></p>
+	  <p>W planach: <b th:text="${data.getAllFuture()}"></b></p>
 	  <p>Filtry: </p>
 	  <form action="">
           <input style="width: 90%" class="for_stats" type="submit" name="type2" value="Obejrzane">

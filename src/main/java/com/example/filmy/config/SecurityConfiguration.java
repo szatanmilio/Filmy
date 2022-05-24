@@ -2,6 +2,7 @@ package com.example.filmy.config;
 
 
 //import com.example.filmy.service.MovieService;
+import com.example.filmy.repository.ProductionRepository;
 import com.example.filmy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
-//        auth.setUserDetailsService(movieService);
+//        auth.setUserDetailsService(productionRepository);
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
