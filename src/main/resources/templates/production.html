@@ -38,10 +38,12 @@
         </div>
         <div class="clearfix"></div>
         <div class="menu-list">
-            <form th:action="@{/production}" method="post" th:object="${Movie}">
-                <button class="add_to_list" name="obejrzane" th:value="*{status}">Obejrzane</button>
-                <button class="add_to_list" name="ogladam" th:field="*{status}">Oglądam</button>
-                <button class="add_to_list" name="plany" th:field="*{status}">W planach</button>
+            <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
+                <input type="hidden" name="type" th:value="MOVIE">
+                <input type="hidden" th:value="${Movie.getId()}" name="idProduction">
+                <button class="add_to_list" name="status"  th:value="OBEJRZANY">Obejrzane</button>
+                <button class="add_to_list" name="status"  th:value="OGLADAM">Oglądam</button>
+                <button class="add_to_list" name="status"  th:value="PLANUJE">W planach</button>
             </form>
             <br><br>
             <button class="tag" th:each="tag : ${Movie.getGenres()} " th:text="${tag.getName()}"></button>
@@ -93,10 +95,12 @@
         </div>
         <div class="clearfix"></div>
         <div class="menu-list">
-            <form action="" method="POST">
-                <button class="add_to_list" name="obejrzane">Obejrzane</button>
-                <button class="add_to_list" name="ogladam">Oglądam</button>
-                <button class="add_to_list" name="plany">W planach</button>
+            <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
+                <input type="hidden" name="type" th:value="TV">
+                <input type="hidden" th:value="${tvSeries.getId()}" name="idProduction">
+                <button class="add_to_list" name="status"  th:value="OBEJRZANY">Obejrzane</button>
+                <button class="add_to_list" name="status"  th:value="OGLADAM">Oglądam</button>
+                <button class="add_to_list" name="status"  th:value="PLANUJE">W planach</button>
             </form>
             <br><br>
             <button class="tag" th:each="tag : ${tvSeries.getGenres()} " th:text="${tag.getName()}"></button>
