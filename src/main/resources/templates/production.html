@@ -36,7 +36,6 @@
         <div class="miniature">
             <img th:src="${Movie.posterPath}" alt="/img/movie.css">
         </div>
-        <div class="clearfix"></div>
         <div class="menu-list">
             <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
                 <input type="hidden" name="type" th:value="MOVIE">
@@ -93,7 +92,6 @@
         <div class="miniature">
             <img th:src="${tvSeries.posterPath}" alt="/img/movie.css">
         </div>
-        <div class="clearfix"></div>
         <div class="menu-list">
             <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
                 <input type="hidden" name="type" th:value="TV">

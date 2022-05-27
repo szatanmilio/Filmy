@@ -13,6 +13,11 @@ img
     max-height: 100%;
 }
 
+.miniature img {
+    width: 100%;
+    height: 100%;
+}
+
 .miniature
 {
     width: 35%;
@@ -26,7 +31,7 @@ img
 {
     background-color: rgb(34, 34, 34);
     margin: 25px;
-    width: 55%;
+    width: 50%;
     height: 60%;
     display: inline-block;
     color: rgb(204, 204, 204);
@@ -57,7 +62,7 @@ img
 {
     margin: 25px;
     background-color: rgb(34, 34, 34);
-    width: 35%;
+    width: 50%;
     height: 20%;
     display: block;
     float:left;
