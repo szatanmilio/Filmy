@@ -36,6 +36,13 @@
         <div class="miniature">
             <img th:src="${Movie.posterPath}" alt="/img/movie.css">
         </div>
+        <div class="desc">
+
+            <h1 th:text="${Movie.title}"></h1>
+
+            <h3 th:text="${Movie.overview.isBlank()} ? 'BRAK OPISU' : ${Movie.overview}"></h3>
+
+        </div>
         <div class="menu-list">
             <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
                 <input type="hidden" name="type" th:value="MOVIE">
@@ -46,15 +53,6 @@
             </form>
             <br><br>
             <button class="tag" th:each="tag : ${Movie.getGenres()} " th:text="${tag.getName()}"></button>
-        </div>
-
-
-        <div class="desc">
-
-            <h1 th:text="${Movie.title}"></h1>
-
-            <h3 th:text="${Movie.overview.isBlank()} ? 'BRAK OPISU' : ${Movie.overview}"></h3>
-
         </div>
 
         <!--    <div class="clearfix"></div>-->
@@ -92,6 +90,13 @@
         <div class="miniature">
             <img th:src="${tvSeries.posterPath}" alt="/img/movie.css">
         </div>
+        <div class="desc">
+
+            <h1 th:text="${tvSeries.name}"></h1>
+
+            <h3 th:text="${tvSeries.overview.isBlank()} ? 'BRAK OPISU' : ${tvSeries.overview}"></h3>
+
+        </div>
         <div class="menu-list">
             <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
                 <input type="hidden" name="type" th:value="TV">
@@ -102,15 +107,6 @@
             </form>
             <br><br>
             <button class="tag" th:each="tag : ${tvSeries.getGenres()} " th:text="${tag.getName()}"></button>
-        </div>
-
-
-        <div class="desc">
-
-            <h1 th:text="${tvSeries.name}"></h1>
-
-            <h3 th:text="${tvSeries.overview.isBlank()} ? 'BRAK OPISU' : ${tvSeries.overview}"></h3>
-
         </div>
 
         <!--    <div class="clearfix"></div>-->
