@@ -21,6 +21,8 @@ public class UserDataController {
 	ProductionRepository productionRepository;
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	MainController mainController;
 
 
 	@PostMapping("/changeUserPassword")
@@ -30,16 +32,13 @@ public class UserDataController {
 		if(passwordEncoder.matches(user.getaPassword(), currentUser.getPassword())){
 			currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
 			userRepository.save(currentUser);
-			// TO DO :  dodac do modelu komunikat o sukcesie
-			return "redirect:/settings";
-
+			model.addAttribute("succesPassword", "Zmiana hasła zakończona pomyślnie");
+			return mainController.settings(model);
 		}
 		else{
-			// TO DO :  dodac do modelu komunikat o porazce
+			model.addAttribute("errorPassword", "Zmiana hasła zakończona niepowodzeniem");
+			return mainController.settings(model);
 		}
-//		model.addAttribute("Production", production);
-
-		return "redirect:/settings";
 	}
 
 	@PostMapping("/changeUserEmail")
@@ -49,15 +48,30 @@ public class UserDataController {
 		if(passwordEncoder.matches(user.getaPassword(), currentUser.getPassword())){
 			currentUser.setEmail(user.getEmail());
 			userRepository.save(currentUser);
-			// TO DO :  dodac do modelu komunikat o sukcesie
-			return "redirect:/settings";
-
+			model.addAttribute("succesMail", "Zmiana adresu e-mail zakończona pomyślnie");
+			return mainController.settings(model);
 		}
 		else{
-			// TO DO :  dodac do modelu komunikat o porazce
+			model.addAttribute("errorMail", "Zmiana adresu e-mail zakończona niepowodzeniem");
+			return mainController.settings(model);
 		}
-//		model.addAttribute("Production", production);
+	}
 
-		return "redirect:/settings";
+
+	@PostMapping("/deleteAccount")
+	public String deleteAccount(@ModelAttribute UserDto user, Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User currentUser = userRepository.findByEmail(userDetails.getUsername());
+		if(passwordEncoder.matches(user.getaPassword(), currentUser.getPassword())){
+			userRepository.delete(currentUser);
+			return "redirect:/logout";
+//			userRepository.save(currentUser);
+//			model.addAttribute("succesMail", "Zmiana adresu e-mail zakończona pomyślnie");
+//			return mainController.settings(model);
+		}
+		else{
+			model.addAttribute("errorDelete", "Wprowadzono błędne hasło");
+			return mainController.settings(model);
+		}
 	}
 }
