@@ -43,6 +43,12 @@
                     <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'" th:field="*{aPassword}">
                     <br>
                     <input type="submit" value="Zmień hasło">
+                    <div class="success" th:if="${succesPassword} != null">
+                        <label th:text="${succesPassword}"></label>
+                    </div><br>
+                    <div class="error" th:if="${errorPassword} != null">
+                        <label th:text="${errorPassword}"></label>
+                    </div><br>
                 </form>
             </div>
 
@@ -54,20 +60,28 @@
                     <div class="error"></div>
                     <br>
                     <label class="text">Podaj hasło: </label><br>
-                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'" th:field="*{aPassword}">
-                    <div class="error"></div><br>
+                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'" th:field="*{aPassword}"><br>
                     <input type="submit" value="Zmień email">
+                    <div class="success" th:if="${succesMail} != null">
+                        <label th:text="${succesMail}"></label>
+                    </div><br>
+                    <div class="error" th:if="${errorMail} != null">
+                        <label th:text="${errorMail}"></label>
+                    </div>
                 </form>
             </div>
 
             <div id="account">
-                <form method="POST" action=''>
+                <form method="POST" th:action="@{/deleteAccount}" th:object="${UserDto}" >
                     <label class="title">Usuwanie konta</label><br>
                     <label class="text">W celu autoryzacji podaj swoje hasło: </label><br>
-                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'">
+                    <input type="password" name="apassword" onfocus="this.placeholder=''" placeholder="Wprowadź aktualne hasło" required onblur="this.placeholder='Wprowadź aktualne hasło'" th:field="*{aPassword}">
                     <div class="error"></div>
                     <br>
                     <input type="submit" value="Usuń konto">
+                    <div class="error" th:if="${errorDelete} != null">
+                        <label th:text="${errorDelete}"></label>
+                    </div>
                 </form>
             </div>
         </div>

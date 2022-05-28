@@ -123,5 +123,4 @@ public class ApiController {
 		return getBestMovies("en", 1, model);
 	}
 
-
 }
