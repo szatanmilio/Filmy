@@ -33,9 +33,9 @@
         </div>
         <div style="clear: both;"></div>
 	  <div id="stats">
-	  <form action="">
+          <form th:action="@{/myList}" method="post" th:object="${MyListDto}">
           <input style="width: 100%" class="for_stats" type="submit" name="type" value="TV">
-          <input style="width: 100%" class="for_stats" type="submit" name="type" value="Movie">
+          <input style="width: 100%" class="for_stats" type="submit" name="type" value="MOVIE">
       </form>
 	  <p>Filmy</p>
 	  <p>Pozycji na liście: <b th:text="${data.getMovieAll()}"></b></p>
@@ -62,19 +62,29 @@
 	  </div>
 	  <div id ="user_list">
           <div class = "bakamovie">
-              <div class = "movie">
-                  <form action="">
-                      <input type="hidden" name="id" value="' .  $result->id . '">
-                      <input type="hidden" name="type" value="Movie">
-                      <input type="image" class="image" src="' . $poster . '" alt="' . $result->title . '" value="submit" />
-                  </form>
+
+              <div class="movie" th:if="${MyMovies != null}" th:each="movie : ${MyMovies}">
+                  <!--                    <a th:href="@{/tvSeries(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>-->
+                  <div th:if="${movie.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
+                      <a th:href="@{/movie(id=${movie.id})}"><img th:src="${movie.posterPath}"></a>
+                  </div>
+                  <div th:if="${movie.posterPath == 'https://image.tmdb.org/t/p/originalnull'}">
+                      <a th:href="@{/movie(id=${movie.id})}"><img th:src="@{img/nocover.jpg}"></a>
+                  </div>
+<!--              </div>-->
+<!--              <div class = "movie">-->
+<!--                  <form action="">-->
+<!--                      <input type="hidden" name="id" value="' .  $result->id . '">-->
+<!--                      <input type="hidden" name="type" value="Movie">-->
+<!--                      <input type="image" class="image" src="' . $poster . '" alt="' . $result->title . '" value="submit" />-->
+<!--                  </form>-->
                   <form action="zmien_status.php?id='.$id_filmu.'&type='.$type.'" method="POST">
                       <button class="on_list" name="obejrzane">Obejrzane</button><br />
-                      <button class="add_to_list" name="obejrzane">Obejrzane</button><br />
+<!--                      <button class="add_to_list" name="obejrzane">Obejrzane</button><br />-->
                       <button class="on_list" name="ogladam">Oglądam</button><br />
-                      <button class="add_to_list" name="ogladam">Oglądam</button><br />
+<!--                      <button class="add_to_list" name="ogladam">Oglądam</button><br />-->
                       <button class="on_list" name="plany">W planach</button><br />
-                      <button class="add_to_list" name="plany">W planach</button><br />
+<!--                      <button class="add_to_list" name="plany">W planach</button><br />-->
                   </form>
                   <br><br>
                   <form action="usun_z_listy.php" method="POST">
@@ -84,6 +94,7 @@
                   <div class="rating">
                       <script src="script.js"></script>
                   </div>
+                  <br>
 
               </div>
           </div>

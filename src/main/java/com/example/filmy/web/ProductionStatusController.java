@@ -8,7 +8,6 @@ import com.example.filmy.web.dto.ProductionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +19,8 @@ public class ProductionStatusController {
 	UserRepository userRepository;
 	@Autowired
 	ProductionRepository productionRepository;
+	@Autowired
+	ApiController apiController;
 
 
 	@PostMapping("/saveStatus")
@@ -27,22 +28,34 @@ public class ProductionStatusController {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User currentUser = userRepository.findByEmail(userDetails.getUsername());
 		Production productionToSave = productionRepository.findProductionByIdProductionAndUserByIdUserAndTypeEquals(production.getIdProduction(), currentUser, production.getType());
-		if(productionToSave == null){
+		if (productionToSave == null) {
 			productionToSave = new Production();
 			productionToSave.setIdProduction(production.getIdProduction());
 			productionToSave.setUserByIdUser(currentUser);
 			productionToSave.setType(production.getType());
 			productionToSave.setStatus(production.getStatus());
 			productionRepository.save(productionToSave);
-		} else{
+		} else {
 			productionToSave.setStatus(production.getStatus());
 			productionRepository.save(productionToSave);
 		}
 		model.addAttribute("Production", production);
+		model.addAttribute("status", "Zmieniono status na: " + production.getStatus());
 		Long id = production.getIdProduction();
-		if(production.getType().equals("MOVIE"))
-			return "redirect:/movie?id="+id;
+		if (production.getType().equals("MOVIE"))
+			return apiController.getMovie(Math.toIntExact(id), "en", model);
+//			return "redirect:/movie?id="+id;
 		else
-			return "redirect:/tvSeries?id="+id;
+			return apiController.getTvSeries(Math.toIntExact(id), "en", model);
+//			return "redirect:/tvSeries?id="+id;
+	}
+
+	public String getStatus(int id, String type) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User currentUser = userRepository.findByEmail(userDetails.getUsername());
+		Production prod = productionRepository.findProductionByIdProductionAndUserByIdUserAndTypeEquals((long) id, currentUser, type);
+		if(prod!= null)
+			return prod.getStatus();
+		return "";
 	}
 }

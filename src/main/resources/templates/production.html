@@ -15,7 +15,7 @@
                 <li class="text_menu">Lista filmów</li>
             </div>
         </a>
-        <a class="link"  th:href="@{/myList}">
+        <a class="link" th:href="@{/myList}">
             <div class="menu-option">
                 <li class="text_menu">Moja lista</li>
             </div>
@@ -47,10 +47,14 @@
             <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
                 <input type="hidden" name="type" th:value="MOVIE">
                 <input type="hidden" th:value="${Movie.getId()}" name="idProduction">
-                <button class="add_to_list" name="status"  th:value="OBEJRZANY">Obejrzane</button>
-                <button class="add_to_list" name="status"  th:value="OGLADAM">Oglądam</button>
-                <button class="add_to_list" name="status"  th:value="PLANUJE">W planach</button>
+                <button th:attr="class=${currentStatus == 'OBEJRZANY' ? 'on_list' : 'add_to_list'}" name="status" th:value="OBEJRZANY">Obejrzane</button>
+                <button th:attr="class=${currentStatus == 'OGLADAM' ? 'on_list' : 'add_to_list'}" name="status" th:value="OGLADAM">Oglądam</button>
+                <button th:attr="class=${currentStatus == 'PLANUJE' ? 'on_list' : 'add_to_list'}" name="status" th:value="PLANUJE">W planach</button>
             </form>
+            <br><br>
+            <div class="statusSuccess" th:if="${status} != null ">
+                <label th:text="${status} "></label>
+            </div>
             <br><br>
             <button class="tag" th:each="tag : ${Movie.getGenres()} " th:text="${tag.getName()}"></button>
         </div>
@@ -69,7 +73,7 @@
                 <li class="text_menu">Lista filmów</li>
             </div>
         </a>
-        <a class="link"  th:href="@{/myList}">
+        <a class="link" th:href="@{/myList}">
             <div class="menu-option">
                 <li class="text_menu">Moja lista</li>
             </div>
@@ -102,10 +106,14 @@
             <form th:action="@{/saveStatus}" method="post" th:object="${ProductionDto}">
                 <input type="hidden" name="type" th:value="TV">
                 <input type="hidden" th:value="${tvSeries.getId()}" name="idProduction">
-                <button class="add_to_list" name="status"  th:value="OBEJRZANY">Obejrzane</button>
-                <button class="add_to_list" name="status"  th:value="OGLADAM">Oglądam</button>
-                <button class="add_to_list" name="status"  th:value="PLANUJE">W planach</button>
+                <button th:attr="class=${currentStatus == 'OBEJRZANY' ? 'on_list' : 'add_to_list'}" name="status" th:value="OBEJRZANY">Obejrzane</button>
+                <button th:attr="class=${currentStatus == 'OGLADAM' ? 'on_list' : 'add_to_list'}" name="status" th:value="OGLADAM">Oglądam</button>
+                <button th:attr="class=${currentStatus == 'PLANUJE' ? 'on_list' : 'add_to_list'}" name="status" th:value="PLANUJE">W planach</button>
             </form>
+            <br><br>
+            <div class="statusSuccess" th:if="${status} != null ">
+                <label th:text="${status} "></label>
+            </div>
             <br><br>
             <button class="tag" th:each="tag : ${tvSeries.getGenres()} " th:text="${tag.getName()}"></button>
         </div>

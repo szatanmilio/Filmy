@@ -26,8 +26,8 @@ public class ApiController {
 	@Autowired
 	ProductionRepository productionRepository;
 	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
-	private MovieApi api = new MovieApi();
+	ProductionStatusController productionStatusController;
+	public MovieApi api = new MovieApi();
 
 
 	@GetMapping("/movie")
@@ -36,8 +36,10 @@ public class ApiController {
 						   Model model) {
 		MovieDb movie = api.getMovie(id, lang);
 		movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+		String status = productionStatusController.getStatus(id, "MOVIE");
 		model.addAttribute("Movie", movie);
 		model.addAttribute("Production", new ProductionDto());
+		model.addAttribute("currentStatus", status);
 		return "production";
 	}
 
@@ -83,8 +85,10 @@ public class ApiController {
 							  Model model) {
 		TvSeries movie = api.getTvSeries(id, lang);
 		movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+		String status = productionStatusController.getStatus(id, "TV");
 		model.addAttribute("Production", new ProductionDto());
 		model.addAttribute("tvSeries", movie);
+		model.addAttribute("currentStatus", status);
 		return "production";
 	}
 
