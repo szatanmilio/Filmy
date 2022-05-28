@@ -5,8 +5,6 @@ import com.example.filmy.model.User;
 import com.example.filmy.repository.ProductionRepository;
 import com.example.filmy.repository.UserRepository;
 import com.example.filmy.service.MovieApi;
-import com.example.filmy.service.ProductionServiceImpl;
-import com.example.filmy.service.UserServiceImpl;
 import com.example.filmy.web.dto.ProductionDto;
 import com.example.filmy.web.dto.UserDto;
 import info.movito.themoviedbapi.TvResultsPage;
@@ -125,65 +123,5 @@ public class ApiController {
 		return getBestMovies("en", 1, model);
 	}
 
-	@PostMapping("/saveStatus")
-	public String productionSubmit(@ModelAttribute ProductionDto production, Model model) {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User currentUser = userRepository.findByEmail(userDetails.getUsername());
-		Production productionToSave = productionRepository.findProductionByIdProductionAndUserByIdUserAndTypeEquals(production.getIdProduction(), currentUser, production.getType());
-		if(productionToSave == null){
-			productionToSave = new Production();
-			productionToSave.setIdProduction(production.getIdProduction());
-			productionToSave.setUserByIdUser(currentUser);
-			productionToSave.setType(production.getType());
-			productionToSave.setStatus(production.getStatus());
-			productionRepository.save(productionToSave);
-		} else{
-			productionToSave.setStatus(production.getStatus());
-			productionRepository.save(productionToSave);
-		}
-		model.addAttribute("Production", production);
-		Long id = production.getIdProduction();
-		if(production.getType().equals("MOVIE"))
-			return "redirect:/movie?id="+id;
-		else
-			return "redirect:/tvSeries?id="+id;
-	}
 
-	@PostMapping("/changeUserPassword")
-	public String userSubmit(@ModelAttribute UserDto user, Model model) {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User currentUser = userRepository.findByEmail(userDetails.getUsername());
-		if(passwordEncoder.matches(user.getaPassword(), currentUser.getPassword())){
-			currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
-			userRepository.save(currentUser);
-			// TO DO :  dodac do modelu komunikat o sukcesie
-			return "redirect:/settings";
-
-		}
-		else{
-			// TO DO :  dodac do modelu komunikat o porazce
-		}
-//		model.addAttribute("Production", production);
-
-		return "redirect:/settings";
-	}
-
-	@PostMapping("/changeUserEmail")
-	public String emailSubmit(@ModelAttribute UserDto user, Model model) {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User currentUser = userRepository.findByEmail(userDetails.getUsername());
-		if(passwordEncoder.matches(user.getaPassword(), currentUser.getPassword())){
-			currentUser.setEmail(user.getEmail());
-			userRepository.save(currentUser);
-			// TO DO :  dodac do modelu komunikat o sukcesie
-			return "redirect:/settings";
-
-		}
-		else{
-			// TO DO :  dodac do modelu komunikat o porazce
-		}
-//		model.addAttribute("Production", production);
-
-		return "redirect:/settings";
-	}
 }
