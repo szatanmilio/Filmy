@@ -126,6 +126,12 @@ input[type=submit]:hover {
     margin-bottom: 10px;
 }
 
+.statusSuccess {
+    color: green;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* formularze logowania rejestracji */
 #flogin {
     border: solid;

@@ -57,7 +57,6 @@ public class UserDataController {
 		}
 	}
 
-
 	@PostMapping("/deleteAccount")
 	public String deleteAccount(@ModelAttribute UserDto user, Model model) {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,9 +64,6 @@ public class UserDataController {
 		if(passwordEncoder.matches(user.getaPassword(), currentUser.getPassword())){
 			userRepository.delete(currentUser);
 			return "redirect:/logout";
-//			userRepository.save(currentUser);
-//			model.addAttribute("succesMail", "Zmiana adresu e-mail zakończona pomyślnie");
-//			return mainController.settings(model);
 		}
 		else{
 			model.addAttribute("errorDelete", "Wprowadzono błędne hasło");
