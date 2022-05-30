@@ -365,6 +365,10 @@ a.link:hover {
     float: left;
 }
 
+.bakamovie img {
+    width: auto;
+}
+
 .movie input {
     max-width: 16%;
     max-height: auto;
