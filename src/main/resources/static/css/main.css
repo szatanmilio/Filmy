@@ -100,7 +100,7 @@ input[type=submit] {
     width: 25%;
     background-color: #3b8e4f;
     color: white;
-    padding: 14px 20px;
+    padding: 10px 20px;
     margin: 8px 0;
     border: none;
     border-radius: 10px;
@@ -367,6 +367,10 @@ a.link:hover {
 
 .bakamovie img {
     width: auto;
+}
+
+.first_on_list {
+    margin-top: 10px;
 }
 
 .movie input {
