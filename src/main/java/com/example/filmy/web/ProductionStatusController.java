@@ -21,6 +21,8 @@ public class ProductionStatusController {
 	ProductionRepository productionRepository;
 	@Autowired
 	ApiController apiController;
+	@Autowired
+	MainController mainController;
 
 
 	@PostMapping("/saveStatus")
@@ -50,12 +52,42 @@ public class ProductionStatusController {
 //			return "redirect:/tvSeries?id="+id;
 	}
 
+	@PostMapping("/saveStatusList")
+	public String productionSubmitList(@ModelAttribute ProductionDto production, Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User currentUser = userRepository.findByEmail(userDetails.getUsername());
+		Production productionToSave = productionRepository.findProductionByIdProductionAndUserByIdUserAndTypeEquals(production.getIdProduction(), currentUser, production.getType());
+		if (productionToSave == null) {
+			productionToSave = new Production();
+			productionToSave.setIdProduction(production.getIdProduction());
+			productionToSave.setUserByIdUser(currentUser);
+			productionToSave.setType(production.getType());
+			productionToSave.setStatus(production.getStatus());
+			productionRepository.save(productionToSave);
+		} else {
+			productionToSave.setStatus(production.getStatus());
+			productionRepository.save(productionToSave);
+		}
+		Long id = production.getIdProduction();
+		return mainController.myList(model, production.getType());
+	}
+
 	public String getStatus(int id, String type) {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User currentUser = userRepository.findByEmail(userDetails.getUsername());
 		Production prod = productionRepository.findProductionByIdProductionAndUserByIdUserAndTypeEquals((long) id, currentUser, type);
-		if(prod!= null)
+		if (prod != null)
 			return prod.getStatus();
 		return "";
+	}
+
+	@PostMapping("/deleteFromList")
+	public String deleteSubmitList(@ModelAttribute ProductionDto production, Model model) {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User currentUser = userRepository.findByEmail(userDetails.getUsername());
+		Production productionToDelete = productionRepository.findProductionByIdProductionAndUserByIdUserAndTypeEquals(production.getIdProduction(), currentUser, production.getType());
+		String type = production.getType();
+		productionRepository.delete(productionToDelete);
+		return mainController.myList(model, type);
 	}
 }

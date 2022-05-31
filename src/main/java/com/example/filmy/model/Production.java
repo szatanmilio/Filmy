@@ -34,7 +34,7 @@ public class Production {
 //		OBEJRZANY, OGLADAM, PLANUJE;
 //	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "id_user", nullable = false)
 	private User userByIdUser;
 
