@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 public class MovieApi {
 	String apiKey = "095f50ca603d72b2dec062fd8e73567c";
 	TmdbSearch search = new TmdbSearch(new TmdbApi(apiKey));
-//	MovieResultsPage testsearch = search.searchMovie("lord",null,"en",true,1);
 	private TmdbMovies movies = new TmdbApi(apiKey).getMovies();
 	private TmdbTV tvSeries = new TmdbApi(apiKey).getTvSeries();
 
@@ -21,17 +20,8 @@ public class MovieApi {
 	public MovieResultsPage getBestMovies(String lang, int page) {
 		return movies.getTopRatedMovies(lang, page);
 	}
-
 	public MovieResultsPage getPopularMovies(String lang, int page) {
 		return movies.getPopularMovies(lang, page);
-	}
-
-	public MovieResultsPage getSimilarMovies(int id, String lang, int page) {
-		return movies.getSimilarMovies(id, lang, page);
-	}
-
-	public MovieResultsPage getRecomendedMovies(int id, String lang, int page) {
-		return movies.getRecommendedMovies(id, lang, page);
 	}
 
 	public TvSeries getTvSeries(int id, String lang) {
@@ -46,7 +36,11 @@ public class MovieApi {
 		return tvSeries.getPopular(lang, page);
 	}
 
-	public MovieResultsPage searchForProduction(String query, int year, String lang, boolean adult, int page){
-		return search.searchMovie("lord",null,"en",true,1);
+	public MovieResultsPage searchForProduction(String query, String lang, boolean adult, int page){
+		return search.searchMovie(query,null,lang,adult,page);
+	}
+
+	public TvResultsPage searchForProductionTv(String query,  String lang, int page){
+		return search.searchTv(query,lang,page);
 	}
 }

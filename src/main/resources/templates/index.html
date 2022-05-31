@@ -17,7 +17,7 @@
                 <li class="text_menu">Lista filmów</li>
             </div>
         </a>
-        <a class="link"  th:href="@{/myList}">
+        <a class="link" th:href="@{/myList}">
             <div class="menu-option">
                 <li class="text_menu">Moja lista</li>
             </div>
@@ -36,67 +36,64 @@
     </div>
     <div style="clear: both;"></div>
     <div class="left">
-        <div class="filtr" th:if="${bestMovies != null}">
+        <div class="filtr" th:if="${Movies != null}">
             <form class="filters" th:action="@{/tvSeriesBest}">
-                <button class="lista_buttons" type="submit" th:name="page" th:value="${page}">Seriale</button>
-                <button class="selected" type="submit" th:name="page" th:value="${page}">Filmy</button>
+                <button class="lista_buttons" type="submit">Seriale</button>
+                <button class="selected" type="submit">Filmy</button>
             </form>
-            <form class="filters" action="">
+            <form class="filters" th:action="@{/filter}" method="post">
                 <br>Sortowanie<br>
+                <input type="hidden" th:name="type" th:attr="value=${Tv != null ? 'TV' : 'MOVIE'}">
                 <select name="sort" class="sort">
-                    <option value="popularity.desc">Popularność malejąco</option>
-                    <option value="popularity.asc">Popularność rosnąco</option>
-                    <option value="release_date.asc">Najnowsze</option>
-                    <option value="release_date.desc">Najstarsze</option>
-                    <option value="original_title.asc">Orginalny tytuł: Od A do Z</option>
-                    <option value="original_title.desc">Orginalny tytuł: Od Z do A</option>
+                    <option th:value="highRate">Najwyżej ocenione</option>
+                    <option th:value="lowRate">Najniżej ocenione</option>
+                    <option th:value="popularityDesc">Popularność malejąco</option>
+                    <option th:value="popularityAsc">Popularność rosnąco</option>
                 </select>
                 <button class="lista_buttons" type="submit">Sortuj</button>
             </form>
         </div>
-        <div class="filtr" th:if="${bestTv != null}">
+        <div class="filtr" th:if="${Tv != null}">
             <form class="filters" th:action="@{/movieBest}">
-                <button class="selected" type="submit" th:name="page" th:value="${page}">Seriale</button>
-                <button class="lista_buttons" type="submit" th:name="page" th:value="${page}">Filmy</button>
+                <button class="selected" type="submit">Seriale</button>
+                <button class="lista_buttons" type="submit">Filmy</button>
             </form>
-            <form class="filters" action="">
+            <form class="filters" th:action="@{/filter}" method="post">
                 <br>Sortowanie<br>
+                <input type="hidden" th:name="type" th:attr="value=${Tv != null ? 'TV' : 'MOVIE'}">
                 <select name="sort" class="sort">
-                    <option value="popularity.desc">Popularność malejąco</option>
-                    <option value="popularity.asc">Popularność rosnąco</option>
-                    <option value="release_date.asc">Najnowsze</option>
-                    <option value="release_date.desc">Najstarsze</option>
-                    <option value="original_title.asc">Orginalny tytuł: Od A do Z</option>
-                    <option value="original_title.desc">Orginalny tytuł: Od Z do A</option>
+                    <option th:value="highRate">Najwyżej ocenione</option>
+                    <option th:value="lowRate">Najniżej ocenione</option>
+                    <option th:value="popularityDesc">Popularność malejąco</option>
+                    <option th:value="popularityAsc">Popularność rosnąco</option>
                 </select>
                 <button class="lista_buttons" type="submit">Sortuj</button>
             </form>
         </div>
     </div>
     <div class="center">
-                <div class="movie" th:if="${bestMovies != null}" th:each="Best : ${bestMovies}">
-                    <div th:if="${Best.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
-                        <a th:href="@{/movie(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
-                    </div>
-                    <div th:if="${Best.posterPath == 'https://image.tmdb.org/t/p/originalnull'}">
-                        <a th:href="@{/movie(id=${Best.id})}"><img th:src="@{img/nocover.jpg}"></a>
-                    </div>
-                </div>
-                <div class="movie" th:if="${bestTv != null}" th:each="Best : ${bestTv}">
-<!--                    <a th:href="@{/tvSeries(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>-->
-                    <div th:if="${Best.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
-                        <a th:href="@{/tvSeries(id=${Best.id})}"><img th:src="${Best.posterPath}"></a>
-                    </div>
-                    <div th:if="${Best.posterPath == 'https://image.tmdb.org/t/p/originalnull'}">
-                        <a th:href="@{/tvSeries(id=${Best.id})}"><img th:src="@{img/nocover.jpg}"></a>
-                    </div>
-                </div>
+        <div class="movie" th:if="${Movies != null}" th:each="m : ${Movies}">
+            <div th:if="${m.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
+                <a th:href="@{/movie(id=${m.id})}"><img th:src="${m.posterPath}"></a>
+            </div>
+            <div th:if="${m.posterPath == 'https://image.tmdb.org/t/p/originalnull'}">
+                <a th:href="@{/movie(id=${m.id})}"><img th:src="@{img/nocover.jpg}"></a>
+            </div>
+        </div>
+        <div class="movie" th:if="${Tv != null}" th:each="t : ${Tv}">
+            <div th:if="${t.posterPath != 'https://image.tmdb.org/t/p/originalnull'}">
+                <a th:href="@{/tvSeries(id=${t.id})}"><img th:src="${t.posterPath}"></a>
+            </div>
+            <div th:if="${t.posterPath == 'https://image.tmdb.org/t/p/originalnull'}">
+                <a th:href="@{/tvSeries(id=${t.id})}"><img th:src="@{img/nocover.jpg}"></a>
+            </div>
+        </div>
     </div>
     <div class="right">
         <div class="filtr">
-            <form class="search" action="">
-                <input type="hidden" name="type" value="' . $type . '">
-                <input type="search" placeholder="Szukaj" id="search" name="search">
+            <form class="search" th:action="@{/searchResults}">
+                <input type="text" placeholder="Szukaj" id="search" name="query" th:value="${query}">
+                <input type="hidden" name="type" th:attr="value=${Tv != null ? 'TV' : 'MOVIE'}">
                 <button class="lista_buttons" type="Submit">Szukaj</button>
             </form>
             </form>
@@ -107,8 +104,9 @@
         </div>
     </div>
     <div style="clear: both;"></div>
-    <div class="pages" th:if="${bestMovies != null}">
-        <form th:action="@{/movieBest}">
+    <div class="pages">
+        <form th:action="@{/nextPage}" method="post">
+            <input th:type="hidden" th:name="pageCategory" th:value="${pageCategory}">
             <button type="Submit" th:name="page" th:value="1">&lt;&lt;</button>
             <button type="Submit" th:name="page" th:value="${page <= 1} ? ${page} : ${page} - 1 ">&lt;</button>
             <button type="Submit" th:name="page" th:value="${page}" th:text="${page}"></button>
@@ -117,16 +115,16 @@
             <button type="Submit" th:name="page" th:value="${totalPages}">&gt;&gt;</button>
         </form>
     </div>
-    <div class="pages" th:if="${bestTv != null}">
-        <form th:action="@{/tvSeriesBest}">
-            <button type="Submit" th:name="page" th:value="1">&lt;&lt;</button>
-            <button type="Submit" th:name="page" th:value="${page <= 1} ? ${page} : ${page} - 1 ">&lt;</button>
-            <button type="Submit" th:name="page" th:value="${page}" th:text="${page}"></button>
-            <button type="Submit" th:name="page" th:value="${page >= totalPages} ? ${totalPages} : ${page} + 1 ">&gt;
-            </button>
-            <button type="Submit" th:name="page" th:value="${totalPages}">&gt;&gt;</button>
-        </form>
-    </div>
+<!--    <div class="pages" th:if="${Tv != null}">-->
+<!--        <form th:action="@{/tvSeriesBest}">-->
+<!--            <button type="Submit" th:name="page" th:value="1">&lt;&lt;</button>-->
+<!--            <button type="Submit" th:name="page" th:value="${page <= 1} ? ${page} : ${page} - 1 ">&lt;</button>-->
+<!--            <button type="Submit" th:name="page" th:value="${page}" th:text="${page}"></button>-->
+<!--            <button type="Submit" th:name="page" th:value="${page >= totalPages} ? ${totalPages} : ${page} + 1 ">&gt;-->
+<!--            </button>-->
+<!--            <button type="Submit" th:name="page" th:value="${totalPages}">&gt;&gt;</button>-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
 </body>
 </html>
