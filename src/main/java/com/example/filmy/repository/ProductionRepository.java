@@ -22,5 +22,7 @@ public interface ProductionRepository extends JpaRepository<Production, Long> {
 
 	List<Production> findAllByUserByIdUserAndTypeEquals(@Param("user") User user, @Param("type") String type);
 
+	List<Production> findAllByUserByIdUserAndTypeEqualsAndStatusEquals(@Param("user") User user, @Param("type") String type, @Param("status") String status);
+
 	String findStatusByIdProductionAndUserByIdUserAndTypeEquals(@Param("pId") Long pId, @Param("user") User user, @Param("type") String type);
 }
