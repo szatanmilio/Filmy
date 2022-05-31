@@ -109,6 +109,10 @@ button.on_list:hover
     cursor: pointer;
 }
 
+button.first_on_list {
+    margin-top: 10px;
+}
+
 button.tag
 {
     margin: 8px;

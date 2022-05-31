@@ -361,7 +361,7 @@ a.link:hover {
 }
 
 .bakamovie {
-    width: 100%;
+    width: 50%;
     float: left;
 }
 
@@ -369,12 +369,8 @@ a.link:hover {
     width: auto;
 }
 
-.first_on_list {
-    margin-top: 10px;
-}
-
 .movie input {
-    max-width: 16%;
+    width: 50%;
     max-height: auto;
     float: left;
     margin: 16px;
