@@ -85,7 +85,6 @@ button.add_to_list
 button.add_to_list:hover
 {
     background-color: rgb(77, 77, 77);
-    font-size: 18px;
     cursor: pointer;
 }
 
@@ -165,17 +164,17 @@ label
     width: 130px;
     height: 130px;
     padding: 5px;
-    color: transparent;
+    /*color: transparent;*/
 }
 
-label::before
+/*label::before
 {
     content: '\2605';
     color: #a1a1a1;
     font-size: 130px;
     line-height: 130px;
     margin-right: -100%;
-}
+}*/
 
 .stars label:hover::before,
 .stars label:hover ~ label::before,
