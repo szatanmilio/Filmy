@@ -121,7 +121,7 @@ public class ApiController {
 							@RequestParam(name = "page", defaultValue = "1", required = false) int page,
 							@RequestParam(name = "type", defaultValue = "MOVIE") String type,
 							Model model) {
-		if (type.equals("MOVIE")) {
+		if (type.equals("MOVIE") && !query.equals("")) {
 			MovieResultsPage res = api.searchForProduction(query, lang, adult, page);
 			for (MovieDb movie : res.getResults())
 				movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
@@ -132,7 +132,7 @@ public class ApiController {
 			lastCategoryPage = "MovieSearch";
 			lastSearchQuery = query;
 			return "index";
-		} else {
+		} else if (type.equals("TV") && !query.equals("")) {
 			TvResultsPage res = api.searchForProductionTv(query, lang, page);
 			for (TvSeries movie : res.getResults())
 				movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
@@ -144,6 +144,7 @@ public class ApiController {
 			lastSearchQuery = query;
 			return "index";
 		}
+		return "index";
 	}
 
 	@GetMapping("/")
