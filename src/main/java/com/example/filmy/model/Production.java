@@ -13,26 +13,12 @@ public class Production {
 	@Basic
 	@Column(name = "id_production")
 	private long idProduction;
-//	@Basic
-//	@Column(name = "id_user")
-//	private long idUser;
-
-//	private enum type {
-//		movie, serial;
-//	}
 	@Basic
 	@Column(name = "type")
 	private String type;
 	@Basic
-	@Column(name = "rating")
-	private int rating;
-	@Basic
 	@Column(name = "status")
 	private String status;
-
-//	private enum status {
-//		OBEJRZANY, OGLADAM, PLANUJE;
-//	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "id_user", nullable = false)
@@ -71,35 +57,17 @@ public class Production {
 		this.status = status;
 	}
 
-	//	public long getIdUser() {
-//		return idUser;
-//	}
-//
-//	public void setIdUser(long idUser) {
-//		this.idUser = idUser;
-//	}
-
-
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
-
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Production that = (Production) o;
-		return id == that.id && idProduction == that.idProduction && rating == that.rating;
+		return id == that.id && idProduction == that.idProduction;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, idProduction, rating);
+		return Objects.hash(id, idProduction);
 	}
 
 	public User getUserByIdUser() {

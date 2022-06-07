@@ -46,10 +46,8 @@ public class ProductionStatusController {
 		Long id = production.getIdProduction();
 		if (production.getType().equals("MOVIE"))
 			return apiController.getMovie(Math.toIntExact(id), "en", model);
-//			return "redirect:/movie?id="+id;
 		else
 			return apiController.getTvSeries(Math.toIntExact(id), "en", model);
-//			return "redirect:/tvSeries?id="+id;
 	}
 
 	@PostMapping("/saveStatusList")
