@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class ApiController {
 	@Autowired
@@ -50,7 +53,7 @@ public class ApiController {
 			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
 		model.addAttribute("Movies", res);
 		model.addAttribute("page", page);
-		model.addAttribute("totalPages", res.getTotalPages());
+		model.addAttribute("totalPages", 500);
 		model.addAttribute("pageCategory", "MovieHighRate");
 		lastCategoryPage = "MovieHighRate";
 		return "index";
@@ -65,9 +68,39 @@ public class ApiController {
 			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
 		model.addAttribute("Movies", res);
 		model.addAttribute("page", page);
-		model.addAttribute("totalPages", res.getTotalPages());
+		model.addAttribute("totalPages", 500);
 		model.addAttribute("pageCategory", "MoviePopularityDesc");
 		lastCategoryPage = "MoviePopularityDesc";
+		return "index";
+	}
+
+	@GetMapping("/movieUnpopular")
+	public String getLeastPopularMovies(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+								   @RequestParam(name = "page", defaultValue = "1") int page,
+								   Model model) {
+		int worstPage = api.getPopularMovies("en", page).getTotalPages() - page;
+		if(worstPage > 500)
+			worstPage = 500 - page;
+		MovieResultsPage res = api.getPopularMovies("en", worstPage);
+		for (MovieDb movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+
+		MovieResultsPage reverse = new MovieResultsPage();
+		List<MovieDb> worst = new ArrayList<>();
+		for (int i = res.getResults().size() - 1; i >= 0; i--) {
+			worst.add(res.getResults().get(i));
+		}
+		reverse.setResults(worst);
+		reverse.setTotalPages(res.getTotalPages());
+		reverse.setPage(res.getPage());
+		reverse.setTotalResults(res.getTotalResults());
+
+
+		model.addAttribute("Movies", reverse);
+		model.addAttribute("page", page);
+		model.addAttribute("totalPages", 500);
+		model.addAttribute("pageCategory", "MoviePopularityAsc");
+		lastCategoryPage = "MoviePopularityAsc";
 		return "index";
 	}
 
@@ -108,9 +141,37 @@ public class ApiController {
 			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
 		model.addAttribute("Tv", res);
 		model.addAttribute("page", page);
-		model.addAttribute("totalPages", res.getTotalPages());
+		model.addAttribute("totalPages", 500);
 		model.addAttribute("pageCategory", "TvPopularityDesc");
 		lastCategoryPage = "TvPopularityDesc";
+		return "index";
+	}
+
+	@GetMapping("/tvSeriesUnpopular")
+	public String getLeastPopularTvSeries(@RequestParam(name = "lang", defaultValue = "en", required = false) String lang,
+									 @RequestParam(name = "page", defaultValue = "1") int page,
+									 Model model) {
+		int worstPage = api.getPopularTvSeries("en", page).getTotalPages() - page;
+		if(worstPage > 500)
+			worstPage = 500 - page;
+		TvResultsPage res = api.getPopularTvSeries(lang, worstPage);
+		for (TvSeries movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+
+		TvResultsPage reverse = new TvResultsPage();
+		List<TvSeries> worst = new ArrayList<>();
+		for (int i = res.getResults().size() - 1; i >= 0; i--) {
+			worst.add(res.getResults().get(i));
+		}
+		reverse.setResults(worst);
+		reverse.setTotalPages(res.getTotalPages());
+		reverse.setPage(res.getPage());
+		reverse.setTotalResults(res.getTotalResults());
+		model.addAttribute("Tv", reverse);
+		model.addAttribute("page", page);
+		model.addAttribute("totalPages", 500);
+		model.addAttribute("pageCategory", "TvPopularityAsc");
+		lastCategoryPage = "TvPopularityAsc";
 		return "index";
 	}
 
@@ -166,18 +227,56 @@ public class ApiController {
 		} else if (sort.equals("popularityDesc")) {
 			return type.equals("MOVIE") ? getPopularMovies(lang, page, model) : getPopularTvSeries(lang, page, model);
 		} else if (sort.equals("popularityAsc")) {
-			//TO DO
+			return type.equals("MOVIE") ? getLeastPopularMovies(lang, page, model) : getLeastPopularTvSeries(lang, page, model);
 		}
 		return getBestMovies("en", 1, model);
 	}
 
 	private String getWorstTvSeries(String lang, int page, Model model) {
-		//TO DO
+		int worstPage = api.getBestTvSeries(lang, page).getTotalPages() - page;
+		TvResultsPage res = api.getBestTvSeries(lang, worstPage);
+		for (TvSeries movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+
+		TvResultsPage reverse = new TvResultsPage();
+		List<TvSeries> worst = new ArrayList<>();
+		for (int i = res.getResults().size() - 1; i >= 0; i--) {
+			worst.add(res.getResults().get(i));
+		}
+		reverse.setResults(worst);
+		reverse.setTotalPages(res.getTotalPages());
+		reverse.setPage(res.getPage());
+		reverse.setTotalResults(res.getTotalResults());
+				model.addAttribute("Tv", reverse);
+		model.addAttribute("page", page);
+		model.addAttribute("totalPages", res.getTotalPages());
+		model.addAttribute("pageCategory", "TvLowRate");
+		lastCategoryPage = "TvLowRate";
 		return "index";
 	}
 
 	private String getWorstMovies(String lang, int page, Model model) {
-		//TO DO
+		int worstPage = api.getBestMovies("en", page).getTotalPages() - page;
+		MovieResultsPage res = api.getBestMovies("en", worstPage);
+		for (MovieDb movie : res.getResults())
+			movie.setPosterPath("https://image.tmdb.org/t/p/original" + movie.getPosterPath());
+
+		MovieResultsPage reverse = new MovieResultsPage();
+		List<MovieDb> worst = new ArrayList<>();
+		for (int i = res.getResults().size() - 1; i >= 0; i--) {
+			worst.add(res.getResults().get(i));
+		}
+		reverse.setResults(worst);
+		reverse.setTotalPages(res.getTotalPages());
+		reverse.setPage(res.getPage());
+		reverse.setTotalResults(res.getTotalResults());
+
+
+		model.addAttribute("Movies", reverse);
+		model.addAttribute("page", page);
+		model.addAttribute("totalPages", res.getTotalPages());
+		model.addAttribute("pageCategory", "MovieLowRate");
+		lastCategoryPage = "MovieLowRate";
 		return "index";
 	}
 
@@ -193,19 +292,19 @@ public class ApiController {
 		if (categoryPage.equals("MovieHighRate")) {
 			return getBestMovies(lang, page, model);
 		} else if (categoryPage.equals("MovieLowRate")) {
-
+			return getWorstMovies(lang, page, model);
 		} else if (categoryPage.equals("MoviePopularityDesc")) {
 			return getPopularMovies(lang, page, model);
 		} else if (categoryPage.equals("MoviePopularityAsc")) {
-
+			return getLeastPopularMovies(lang, page, model);
 		} else if (categoryPage.equals("TvHighRate")) {
 			return getBestTvSeries(lang, page, model);
 		} else if (categoryPage.equals("TvLowRate")) {
-
+			return getWorstTvSeries(lang, page, model);
 		} else if (categoryPage.equals("TvPopularityDesc")) {
 			return getPopularTvSeries(lang, page, model);
 		} else if (categoryPage.equals("TvPopularityAsc")) {
-
+			return getLeastPopularTvSeries(lang, page, model);
 		} else if (categoryPage.equals("MovieSearch")) {
 			return getSearch(lastSearchQuery, "en", false, page, "MOVIE", model);
 		} else if (categoryPage.equals("TvSearch")) {
