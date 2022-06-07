@@ -58,12 +58,6 @@
             <br><br>
             <button class="tag" th:each="tag : ${Movie.getGenres()} " th:text="${tag.getName()}"></button>
         </div>
-
-        <!--    <div class="clearfix"></div>-->
-
-        <!--        <div class="rating">-->
-        <!--                  <script src="gwiazdki.js"></script>-->
-        <!--        </div>-->
     </div>
 </div>
 <div id="container" th:if="${tvSeries != null}">
@@ -117,12 +111,6 @@
             <br><br>
             <button class="tag" th:each="tag : ${tvSeries.getGenres()} " th:text="${tag.getName()}"></button>
         </div>
-
-        <!--    <div class="clearfix"></div>-->
-
-        <!--        <div class="rating">-->
-        <!--                  <script src="gwiazdki.js"></script>-->
-        <!--        </div>-->
     </div>
 </div>
 </body>
